@@ -12,7 +12,8 @@
     const btnLst = [];
     const kanjiList = [];
     const meaningList = [];
-    const URL = "http://localhost:3000/"
+    const URL = "http://localhost:3000/";
+    const PASSWORD = "123";
     function getElementsWords() {
       // get all words columns
         const elementsWordsList = document.getElementsByClassName("concept_light clearfix");
@@ -42,17 +43,18 @@
         }
     }
     function sendData() {
-        GM_xmlhttpRequest( {
-            method:     "POST",
-            url:        URL,
-            data:       "kanjiList=" + encodeURIComponent(kanjiList) + "&" +
-            "meaningList=" + encodeURIComponent(meaningList)
+        GM_xmlhttpRequest({
+            method: "POST",
+            url: URL,
+            data: "password=" + encodeURIComponent("123") + "&" +
+                "kanjiList=" + encodeURIComponent(kanjiList) + "&" +
+                "meaningList=" + encodeURIComponent(meaningList)
             ,
-            headers:    {
+            headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            onload:     function (response) {
-                console.log (response.responseText);
+            onload: function (response) {
+                console.log(response.responseText);
             }
         });
     }
