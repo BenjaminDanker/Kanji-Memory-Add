@@ -8,47 +8,51 @@
 // ==/UserScript==
 
 
-(function() {
-    const btnLst = [];
+(function () {
     const kanjiList = [];
     const meaningList = [];
-    const URL = "http://localhost:3000/";
+    const readingList = [];
+    const URL = "http://localhost:3000/addKanji";
     const PASSWORD = "123";
     function getElementsWords() {
-      // get all words columns
+        // get all words columns
         const elementsWordsList = document.getElementsByClassName("concept_light clearfix");
-      //
-        for (let i=0; i < elementsWordsList.length; i++) {
-          // create kanji string list
+        //
+        for (let i = 0; i < elementsWordsList.length; i++) {
+            // create kanji string list
             kanjiList.push(elementsWordsList[i].getElementsByClassName("text")[0].innerText);
-          //
-          // create meaning string list
+            //
+            // create meaning string list
             const tempMeaningList = []
             const elementsMeaningList = elementsWordsList[i].getElementsByClassName("meaning-meaning");
-            for (let i=0; i < elementsMeaningList.length; i++) {
-                tempMeaningList.push(elementsMeaningList[i].innerText);
+            for (let i2 = 0; i2 < elementsMeaningList.length; i2++) {
+                tempMeaningList.push(elementsMeaningList[i2].innerText);
             }
             meaningList.push(tempMeaningList);
-          //
+            //
+            // create reading string list
+            readingList.push(document.getElementsByClassName("furigana")[i].innerText)
         }
     }
     function createButtons() {
-        for (let i=0; i < kanjiList.length; i++) {
+        for (let i = 0; i < kanjiList.length; i++) {
             var btn = document.createElement('button');
             btn.innerHTML = `<button id='myButton${i}' type='button' style='height:10px'> +`;
             btn.addEventListener('click', function () {
+                sendData(kanjiList[i], meaningList[i], readingList[i]);
             });
-            btnLst.push(btn);
             document.getElementsByClassName("concept_light-representation")[i].appendChild(btn);
         }
     }
-    function sendData() {
+    function sendData(kanjiToBeReviewed, meaningToBeReviewed, readingToBeReviewed) {
         GM_xmlhttpRequest({
             method: "POST",
             url: URL,
-            data: "password=" + encodeURIComponent("123") + "&" +
-                "kanjiList=" + encodeURIComponent(kanjiList) + "&" +
-                "meaningList=" + encodeURIComponent(meaningList)
+            data: "email=" + encodeURIComponent("123") + "&" +
+                "password=" + encodeURIComponent("123") + "&" +
+                "kanjiToBeReviewed=" + encodeURIComponent(kanjiToBeReviewed) + "&" +
+                "meaningToBeReviewed=" + encodeURIComponent(meaningToBeReviewed) + "&" +
+                "readingToBeReviewed=" + encodeURIComponent(readingToBeReviewed)
             ,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -60,5 +64,4 @@
     }
     getElementsWords();
     createButtons();
-    sendData();
 })();
