@@ -17,17 +17,18 @@ app.use(session({
 }))
 app.listen(3000);
 
+
 let data = null;
-const email = "123";
-const server_password = "123";
 
 
 app.post("/addKanji", (req, res) => {
     data = req.body;
 
-    if (data.email === email && data.password === server_password) {
-        sql_organize.insertKanjiSQL();
-    }
+    sql_organize.getEmailPass(data).then(function (result) {
+        if (result[0].password === data.password) {
+            sql_organize.insertKanjiSQL(data);
+        }
+    }).catch((err) => setImmediate(() => { throw err; }));
 });
 
 app.post("/addSignup", (req, res) => {

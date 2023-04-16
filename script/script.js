@@ -13,7 +13,8 @@
     const meaningList = [];
     const readingList = [];
     const URL = "http://localhost:3000/addKanji";
-    const PASSWORD = "123";
+    const EMAIL = "bsd2002@cox.net";
+    const PASSWORD = "Rtinh75gwMWnMv2";
     function getElementsWords() {
         // get all words columns
         const elementsWordsList = document.getElementsByClassName("concept_light clearfix");
@@ -48,8 +49,8 @@
         GM_xmlhttpRequest({
             method: "POST",
             url: URL,
-            data: "email=" + encodeURIComponent("123") + "&" +
-                "password=" + encodeURIComponent("123") + "&" +
+            data: "email=" + encodeURIComponent(EMAIL) + "&" +
+                "password=" + encodeURIComponent(PASSWORD) + "&" +
                 "kanjiToBeReviewed=" + encodeURIComponent(kanjiToBeReviewed) + "&" +
                 "meaningToBeReviewed=" + encodeURIComponent(meaningToBeReviewed) + "&" +
                 "readingToBeReviewed=" + encodeURIComponent(readingToBeReviewed)
