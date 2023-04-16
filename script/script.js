@@ -13,8 +13,8 @@
     const meaningList = [];
     const readingList = [];
     const URL = "http://localhost:3000/addKanji";
-    const EMAIL = "bsd2002@cox.net";
-    const PASSWORD = "Rtinh75gwMWnMv2";
+    const EMAIL = "";
+    const PASSWORD = "";
     function getElementsWords() {
         // get all words columns
         const elementsWordsList = document.getElementsByClassName("concept_light clearfix");
