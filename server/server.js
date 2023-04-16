@@ -22,15 +22,6 @@ const email = "123";
 const server_password = "123";
 
 
-app.get("/", function (req, res) {
-    if (req.session.user === undefined) {
-        res.render("index.ejs", { loggedin: false });
-    }
-    else {
-        res.render("index.ejs", { loggedin: true });
-    }
-});
-
 app.post("/addKanji", (req, res) => {
     data = req.body;
 
@@ -47,22 +38,30 @@ app.post("/addSignup", (req, res) => {
     req.session.user = data.email;
 
     res.redirect("/login.html");
-})
+});
 
 app.post("/addLogin", (req, res) => {
     data = req.body;
-    console.log("data", data);
 
     sql_organize.getEmailPass(data).then(function (result) {
         req.session.user = result[0].email;
         res.redirect("..");
-    }).catch((err) => setImmediate(() => { throw err; }));;
-})
+    }).catch((err) => setImmediate(() => { throw err; }));
+});
+
+app.get("/", function (req, res) {
+    if (req.session.user === undefined) {
+        res.render("index.ejs", { loggedin: false });
+    }
+    else {
+        res.render("index.ejs", { loggedin: true });
+    }
+});
 
 app.get("/logout", (req, res) => {
-    req.session.user = undefined
+    req.session.user = undefined;
 
     res.render("index.ejs", { loggedin: false });
-})
+});
 
 //sql_organize.variousSQL();

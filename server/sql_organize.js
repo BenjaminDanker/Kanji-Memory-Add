@@ -49,7 +49,7 @@ module.exports = {
 
             con.query(`SELECT * FROM emailPass WHERE email LIKE '%${data.email}%'`, function (err, result) {
                 if (err) console.log(err);
-                return resolve(result)
+                return resolve(result);
             })
         });
     },
