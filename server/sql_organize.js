@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 
-
+// mySQL connection 
 function makeConnection() {
     const con = mysql.createConnection({
         host: "localhost",
@@ -17,6 +17,7 @@ function makeConnection() {
 }
 
 module.exports = {
+    // Put vocabulary info into database from script
     insertKanjiSQL: function (data) {
         let con = makeConnection();
 
@@ -33,6 +34,7 @@ module.exports = {
         }
     },
 
+    // Put email and password into database from signup
     insertEmailPass: function (data) {
         let con = makeConnection();
 
@@ -44,7 +46,9 @@ module.exports = {
         }
     },
 
+    // Get email and password
     getEmailPass: function (data) {
+        // uses Promise to wait for query, then return result
         return new Promise(function (resolve, reject) {
             let con = makeConnection();
 
@@ -60,6 +64,7 @@ module.exports = {
         });
     },
 
+    // Miscellaneous mySQL usage
     variousSQL: function () {
         let con = makeConnection();
 
