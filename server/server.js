@@ -59,4 +59,10 @@ app.post("/addLogin", (req, res) => {
     }).catch((err) => setImmediate(() => { throw err; }));;
 })
 
+app.get("/logout", (req, res) => {
+    req.session.user = undefined
+
+    res.render("index.ejs", { loggedin: false });
+})
+
 //sql_organize.variousSQL();
