@@ -12,7 +12,7 @@
     const kanjiList = [];
     const meaningList = [];
     const readingList = [];
-    const URL = "http://localhost:3000/addKanji";
+    const URL = "http://localhost:3000/addVocab";
     const EMAIL = "";
     const PASSWORD = "";
     // Put kanji, meaning, reading into respective lists
