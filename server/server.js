@@ -17,7 +17,6 @@ app.use(session({
 app.listen(3000);
 
 
-
 // Handle request to add vocabulary to database
 app.post("/addVocab", (req, res) => {
     data = req.body;
@@ -86,7 +85,18 @@ function isLoggedin(req, res, next) {
 
 // Handle review page
 app.get("/review", isLoggedin, (req, res) => {
-    sql_organize.getVocab(req.session.user).then(function (reviewList) {
+    sql_organize.getVocab(req.session.user).then(function (vocabList) {
+      // put only vocab past review due date into new list
+        currentTime = new Date().getTime();
+        let reviewList = [];
+        for (let i = 0; i < vocabList.length; i++) {
+            // if current vocab stage less than max (7), and current time is greater than next review time
+            if (vocabList[i].stage < 7 && vocabList[i].nextReviewTime < currentTime) {
+                reviewList.push(vocabList[i]);
+            }
+        }
+      //
+
         // add 'end' as an indicator to stop review
         reviewList.push("end");
 
@@ -98,6 +108,7 @@ app.get("/review", isLoggedin, (req, res) => {
 //      due to using ajax for the call, redirect is done in page script
 app.post("/reviewEnd", (req, res) => {
     let reviewList = req.body.reviewList;
+
     // remove 'end'
     reviewList.pop();
 

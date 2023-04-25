@@ -27,8 +27,11 @@ module.exports = {
         let con = makeConnection();
 
         try {
-            timeOfReview = new Date().getTime()
-            con.query(`INSERT INTO vocab (parent_ID, kanji, meaning, reading, stage, latestReviewTime) VALUES ('${userID}', '${data.kanjiToBeReviewed}', '${data.meaningToBeReviewed}', '${data.readingToBeReviewed}', 0, ${timeOfReview});`);
+            currentTime = new Date().getTime()
+            const fourhours = 1000 * 60 * 60 * 4
+            nextReviewTime = currentTime + fourhours
+
+            con.query(`INSERT INTO vocab (parent_ID, kanji, meaning, reading, stage, nextReviewTime) VALUES ('${userID}', '${data.kanjiToBeReviewed}', '${data.meaningToBeReviewed}', '${data.readingToBeReviewed}', 0, ${nextReviewTime});`);
         }
         finally {
             con.end();
@@ -49,9 +52,9 @@ module.exports = {
             let con = makeConnection();
 
             try {
-                con.query(`SELECT * FROM vocab WHERE parent_ID LIKE ${userID}`, function (err, result) {
+                con.query(`SELECT * FROM vocab WHERE parent_ID LIKE ${userID}`, function (err, vocabList) {
                     if (err) console.log(err);
-                    return resolve(result);
+                    return resolve(vocabList);
                 })
             }
             finally {
@@ -66,7 +69,7 @@ module.exports = {
 
         try {
             for (let i = 0; i < reviewList.length; i++) {
-                con.query(`UPDATE vocab SET stage=${reviewList[i].stage}, latestReviewTime=${reviewList[i].latestReviewTime} WHERE vocabID=${reviewList[i].vocabID}`)
+                con.query(`UPDATE vocab SET stage=${reviewList[i].stage}, nextReviewTime=${reviewList[i].nextReviewTime} WHERE vocabID=${reviewList[i].vocabID}`)
             }
         }
         finally {
@@ -109,7 +112,7 @@ module.exports = {
         let con = makeConnection();
 
         //con.query("CREATE TABLE userInfo (userID int AUTO_INCREMENT, primary key(userID), username varchar(50), email varchar(30), password varchar(30))")
-        //con.query("CREATE TABLE vocab (parent_ID int, INDEX index_parent_ID (parent_ID), FOREIGN KEY (parent_ID) REFERENCES userInfo(userID) ON UPDATE CASCADE ON DELETE CASCADE, vocabID int AUTO_INCREMENT, primary key(vocabID), kanji varchar(50), meaning varchar(255), reading varchar(50), stage int, latestReviewTime bigint)")
+        //con.query("CREATE TABLE vocab (parent_ID int, INDEX index_parent_ID (parent_ID), FOREIGN KEY (parent_ID) REFERENCES userInfo(userID) ON UPDATE CASCADE ON DELETE CASCADE, vocabID int AUTO_INCREMENT, primary key(vocabID), kanji varchar(50), meaning varchar(255), reading varchar(50), stage int, nextReviewTime bigint)")
         //con.query("DROP TABLE vocab");
         //con.query("DROP TABLE userInfo");
         //con.query(`INSERT INTO test (kanji, meaning, reading, stage, latestReviewTime) VALUES ('${data.kanjiToBeReviewed}', '${data.meaningToBeReviewed}', '${data.readingToBeReviewed}', 0, ${timeOfReview});`);
