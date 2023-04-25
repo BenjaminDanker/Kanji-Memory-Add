@@ -1,13 +1,18 @@
 ﻿const mysql = require("mysql");
+const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
 
-// mySQL connection 
+
+const options = {
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "kanjiList"
+}
+
+// create mySQL connection 
 function makeConnection() {
-    const con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "password",
-        database: "kanjiList"
-    });
+    const con = mysql.createConnection(options);
     con.connect((err) => {
         if (err) console.log(err);
         console.log("Connection Established");
@@ -28,6 +33,14 @@ module.exports = {
         finally {
             con.end();
         }
+    },
+
+    // get msqyl connection for session storage
+    getSessionConnection: function () {
+        const con = mysql.createConnection(options);
+        const sessionStore = new MySQLStore({}, con);
+
+        return sessionStore;
     },
 
     // Get vocab
@@ -100,9 +113,10 @@ module.exports = {
         //con.query("DROP TABLE vocab");
         //con.query("DROP TABLE userInfo");
         //con.query(`INSERT INTO test (kanji, meaning, reading, stage, latestReviewTime) VALUES ('${data.kanjiToBeReviewed}', '${data.meaningToBeReviewed}', '${data.readingToBeReviewed}', 0, ${timeOfReview});`);
-        con.query(`SELECT * FROM vocab WHERE parent_ID LIKE 3`, function (err, result) { if (err) console.log(err); console.log(result); })
-        con.query("SELECT * FROM userInfo", function (err, result) { if (err) console.log(err); console.log(result); })
-        //con.query("DELETE FROM userInfo");
+        //con.query(`SELECT * FROM vocab WHERE parent_ID LIKE 3`, function (err, result) { if (err) console.log(err); console.log(result); })
+        //con.query("SELECT * FROM userInfo", function (err, result) { if (err) console.log(err); console.log(result); })
+        con.query("SELECT * FROM sessions", function (err, result) { if (err) console.log(err); console.log(result); })
+        //con.query("DELETE FROM sessions");
         con.end();
     }
 }

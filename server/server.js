@@ -8,12 +8,14 @@ app.set("view engine", "ejs");
 app.use(express.static("views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    resave: false,
-    saveUninitialized: true,
     secret: "unknownsecret",
-    //cookie: { secure: true }
-}))
+    store: sql_organize.getSessionConnection(),
+    cookie: {secure: false, maxAge: 500000000000},
+    resave: false,
+    saveUninitialized: false
+}));
 app.listen(3000);
+
 
 
 // Handle request to add vocabulary to database
@@ -57,6 +59,7 @@ app.post("/addLogin", (req, res) => {
     sql_organize.getUserInfo(data).then(function (userInfo) {
         if (userInfo[0].password === data.password) {
             req.session.user = userInfo[0].userID;
+
             res.redirect("/");
         }
     }).catch((err) => setImmediate(() => { throw err; }));
