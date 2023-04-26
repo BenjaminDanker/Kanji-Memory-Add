@@ -98,10 +98,15 @@ app.get("/review", isLoggedin, (req, res) => {
         }
       //
 
-        // add 'end' as an indicator to stop review
-        reviewList.push("end");
+        if (reviewList.length > 0) {
+            // add 'end' as an indicator to stop review
+            reviewList.push("end");
 
-        res.render("review.ejs", { reviewList });
+            res.render("review.ejs", { reviewList });
+        }
+        else {
+            res.redirect("/");
+        }
     })
 });
 
