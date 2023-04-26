@@ -66,6 +66,10 @@ body {
 
 /* signup and login page */
 
+#signupBody {
+    overflow: hidden;
+}
+
 .container {
     border: 1px solid #ccc;
     border-radius: 10px;
