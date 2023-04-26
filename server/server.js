@@ -18,7 +18,7 @@ app.listen(3000);
 
 
 // Handle request to add vocabulary to database
-app.post("/addVocab", (req, res) => {
+app.post("/addVocab", function (req, res) {
     data = req.body;
 
   // get/verify email and password, to put into database
@@ -41,7 +41,7 @@ app.get("/", function (req, res) {
 });
 
 // Handle request to signup
-app.post("/addSignup", (req, res) => {
+app.post("/addSignup", function (req, res) {
     data = req.body;
 
     // put email and password into database
@@ -51,7 +51,7 @@ app.post("/addSignup", (req, res) => {
 });
 
 // Handle request to login
-app.post("/addLogin", (req, res) => {
+app.post("/addLogin", function (req, res) {
     data = req.body;
 
   // get/verify email and password, then make user session
@@ -67,7 +67,7 @@ app.post("/addLogin", (req, res) => {
 });
 
 // Handle request to logout
-app.get("/logout", (req, res) => {
+app.get("/logout", function (req, res) {
     req.session.userID = undefined;
 
     res.render("index.ejs", { loggedin: false });
@@ -85,7 +85,7 @@ function isLoggedin(req, res, next) {
 }
 
 // Handle review page
-app.get("/review", isLoggedin, (req, res) => {
+app.get("/review", isLoggedin, function (req, res) {
     sql_organize.getVocab(req.session.userID).then(function (vocabList) {
       // put only vocab past review due date into new list
         currentTime = new Date().getTime();
@@ -112,7 +112,7 @@ app.get("/review", isLoggedin, (req, res) => {
 
 // Handles call for end of review
 //      due to using ajax for the call, redirect is done in page script
-app.post("/reviewEnd", (req, res) => {
+app.post("/reviewEnd", function (req, res) {
     let reviewList = req.body.reviewList;
 
     // remove 'end'
