@@ -32,11 +32,11 @@ app.post("/addVocab", (req, res) => {
 
 // Handle home page between logged in and logged out
 app.get("/", function (req, res) {
-    if (req.session.user === undefined) {
+    if (req.session.userID === undefined) {
         res.render("index.ejs", { loggedin: false });
     }
     else {
-        res.render("index.ejs", { loggedin: true });
+        res.render("index.ejs", { loggedin: true, username: req.session.username });
     }
 });
 
@@ -57,7 +57,8 @@ app.post("/addLogin", (req, res) => {
   // get/verify email and password, then make user session
     sql_organize.getUserInfo(data).then(function (userInfo) {
         if (userInfo[0].password === data.password) {
-            req.session.user = userInfo[0].userID;
+            req.session.userID = userInfo[0].userID;
+            req.session.username = userInfo[0].username
 
             res.redirect("/");
         }
@@ -67,15 +68,15 @@ app.post("/addLogin", (req, res) => {
 
 // Handle request to logout
 app.get("/logout", (req, res) => {
-    req.session.user = undefined;
+    req.session.userID = undefined;
 
     res.render("index.ejs", { loggedin: false });
 });
 
-// Checks if already logged in
+// Redirects to home page if not logged in
 //    currently only used on review page
 function isLoggedin(req, res, next) {
-    if (req.session.user) {
+    if (req.session.userID) {
         next();
     }
     else {
@@ -85,7 +86,7 @@ function isLoggedin(req, res, next) {
 
 // Handle review page
 app.get("/review", isLoggedin, (req, res) => {
-    sql_organize.getVocab(req.session.user).then(function (vocabList) {
+    sql_organize.getVocab(req.session.userID).then(function (vocabList) {
       // put only vocab past review due date into new list
         currentTime = new Date().getTime();
         let reviewList = [];

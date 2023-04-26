@@ -17,7 +17,6 @@ body {
 
 .navbar a {
     color: black;
-    text-align: center;
     padding: 10px;
     text-decoration: none;
 }
@@ -29,6 +28,10 @@ body {
 .homeHref {
     float: left;
     font-size: 170%;
+}
+
+#username {
+    float: right;
 }
 
 .lsHref {

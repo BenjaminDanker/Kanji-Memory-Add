@@ -10,6 +10,7 @@
         <a class="homeHref" href="/index.ejs">Kanji Memory Add</a>
         <% if (loggedin === true) { %>
             <a class="lsHref" href="/logout">logout</a>
+            <p id="username"> <%= username %> </p>
         <% } else {%>
             <a class="lsHref" href="/signup.html">sign up</a>
             <a class="lsHref" href="/login.html">login</a>
@@ -20,6 +21,7 @@
         <% if (loggedin === true) { %>
             <a class="mainHref" href="/review">Review</a>
         <% } %>
+    </div>
 
 </body>
 </html>
