@@ -37,7 +37,15 @@ app.get("/", function (req, res) {
         res.render("index.ejs", { loggedin: false });
     }
     else {
-        res.render("index.ejs", { loggedin: true, username: req.session.username });
+        sql_organize.getVocab(req.session.userID).then(function (vocabList) {
+            let reviewList = util_functions.getReviewList(vocabList);
+
+            res.render("index.ejs", {
+                loggedin: true,
+                username: req.session.username,
+                reviewLength: reviewList.length
+            });
+        });
     }
 });
 
