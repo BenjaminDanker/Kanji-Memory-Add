@@ -52,8 +52,8 @@
                 window.location.replace("/")
             }
             else {
-                document.getElementById("kanji").innerHTML = reviewList[i].kanji
                 i += 1
+                document.getElementById("kanji").innerHTML = reviewList[i].kanji
             }
         }
         function incorrect() {
@@ -62,10 +62,10 @@
         function correct() {
           // set the next time to review
             currentTime = new Date().getTime();
-                for (let i = 0; i < reviewList.length; i++) {
-                    var nextTime = stageTimesMap.get(parseInt(reviewList[i].stage))
-                    reviewList[i].nextReviewTime = currentTime + nextTime
-                }
+            for (let i = 0; i < reviewList.length; i++) {
+                var nextTime = stageTimesMap.get(parseInt(reviewList[i].stage))
+                reviewList[i].nextReviewTime = currentTime + nextTime
+            }
           //
 
             reviewList[i].stage += 1
