@@ -29,7 +29,9 @@
 
     <div class="infoHolder">
         <details class="dropdownInfo">
-            <p>here</p>
+            <summary>Info</summary>
+            <p id="meaningInfo">meaningText</p>
+            <p id="readingInfo">readingText</p>
         </details>
     </div>
 
@@ -45,8 +47,10 @@
         // change initial remaining review count
         document.getElementById("remainingCounter").innerHTML = reviewRemainingCount;
 
-        // change initial kanji text
+        // change initial kanji
         document.getElementById("kanji").innerHTML = reviewList[0].kanji
+        document.getElementById("meaningInfo").innerHTML = reviewList[0].meaning
+        document.getElementById("readingInfo").innerHTML = reviewList[0].reading
 
         // hashmap creation
         const fourhours = 1000 * 60 * 60 * 4
@@ -81,8 +85,13 @@
                 reviewRemainingCount -= 1
                 document.getElementById("remainingCounter").innerHTML = reviewRemainingCount;
 
-                // replace kanji text
+                // replace kanji
                 document.getElementById("kanji").innerHTML = reviewList[i].kanji
+                document.getElementById("meaningInfo").innerHTML = reviewList[i].meaning
+                document.getElementById("readingInfo").innerHTML = reviewList[i].reading
+
+                // close details info
+                document.getElementsByTagName("details")[0].removeAttribute("open");
             }
         }
         function incorrect() {
