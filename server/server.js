@@ -99,9 +99,6 @@ app.get("/review", isLoggedin, function (req, res) {
         let reviewList = util_functions.getReviewList(vocabList);
 
         if (reviewList.length > 0) {
-            // add 'end' as an indicator to stop review
-            reviewList.push("end");
-
             res.render("review.ejs", { reviewList });
         }
         else {
@@ -114,9 +111,6 @@ app.get("/review", isLoggedin, function (req, res) {
 //      due to using ajax for the call, redirect is done in page script
 app.post("/reviewEnd", function (req, res) {
     let reviewList = req.body.reviewList;
-
-    // remove 'end'
-    reviewList.pop();
 
     sql_organize.updateVocab(reviewList);
 });

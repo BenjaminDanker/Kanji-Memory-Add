@@ -48,7 +48,7 @@
             document.getElementById("kanji").innerHTML = reviewList[i].kanji
 
             function changeKanji() {
-                if (reviewList[i + 1] === "end") {
+                if (i + 1 === reviewList.length) {
                     $.ajax({
                         url: "/reviewEnd",
                         type: "POST",
