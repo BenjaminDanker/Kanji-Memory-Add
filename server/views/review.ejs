@@ -71,10 +71,9 @@
             function correct() {
                 // set the next time to review
                 currentTime = new Date().getTime();
-                for (let i = 0; i < reviewList.length; i++) {
-                    var nextTime = stageTimesMap.get(parseInt(reviewList[i].stage))
-                    reviewList[i].nextReviewTime = currentTime + nextTime
-                }
+                var nextTime = stageTimesMap.get(parseInt(reviewList[i].stage))
+
+                reviewList[i].nextReviewTime = currentTime + nextTime
                 //
 
                 reviewList[i].stage += 1
