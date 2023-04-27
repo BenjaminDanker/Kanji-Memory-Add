@@ -20,13 +20,21 @@
     <div class="buttonHolder">
         <input type="button" id="incorrectButton" class="chooseButton" value="Incorrect" />
         <input type="button" id="correctButton" class="chooseButton" value="Correct" />
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+
+        <form id="reviewForm" action="/reviewEnd" method="post">
+            <input id="reviewInput" type="hidden" name="reviewList" value="">
+        </form>
+
         <script>
+            document.getElementById("incorrectButton").addEventListener("click", incorrect, false);
+            document.getElementById("correctButton").addEventListener("click", correct, false);
+
             var reviewList = <%-JSON.stringify(reviewList)%>
 
-            document.getElementById("incorrectButton").addEventListener("click", incorrect, false)
-            document.getElementById("correctButton").addEventListener("click", correct, false)
+            // change initial kanji text
+            document.getElementById("kanji").innerHTML = reviewList[0].kanji
 
+          // hashmap creation
             const fourhours = 1000 * 60 * 60 * 4
             const eighthours = 1000 * 60 * 60 * 4
             const oneday = 1000 * 60 * 60 * 24
@@ -43,18 +51,14 @@
             stageTimesMap.set(4, oneweek);
             stageTimesMap.set(5, twoweeks);
             stageTimesMap.set(6, fourmonths);
+          //
 
             i = 0
-            document.getElementById("kanji").innerHTML = reviewList[i].kanji
 
             function changeKanji() {
                 if (i + 1 === reviewList.length) {
-                    $.ajax({
-                        url: "/reviewEnd",
-                        type: "POST",
-                        data: { reviewList },
-                    })
-                    window.location.replace("/")
+                    document.getElementById("reviewInput").value = JSON.stringify(reviewList);
+                    document.getElementById("reviewForm").submit();
                 }
                 else {
                     i += 1

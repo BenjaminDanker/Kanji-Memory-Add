@@ -110,9 +110,11 @@ app.get("/review", isLoggedin, function (req, res) {
 // Handles call for end of review
 //      due to using ajax for the call, redirect is done in page script
 app.post("/reviewEnd", function (req, res) {
-    let reviewList = req.body.reviewList;
+    let reviewList = JSON.parse(req.body.reviewList);
 
     sql_organize.updateVocab(reviewList);
+
+    res.redirect("/");
 });
 
 //sql_organize.variousSQL();
