@@ -21,35 +21,38 @@
         const elementsWordsList = document.getElementsByClassName("concept_light clearfix");
         //
         for (let i = 0; i < elementsWordsList.length; i++) {
-          // create kanji string list
-            kanjiList.push(elementsWordsList[i].getElementsByClassName("text")[0].innerText);
-          //
-          // create meaning string list
+            // create kanji string list
+            var kanjiTextElement = elementsWordsList[i].getElementsByClassName("text")
+            if (kanjiTextElement.length > 0) {
+                kanjiList.push(kanjiTextElement[0].innerText);
+            }
+            //
+            // create meaning string list
             const tempMeaningList = []
             const elementsMeaningList = elementsWordsList[i].getElementsByClassName("meaning-meaning");
             for (let i2 = 0; i2 < elementsMeaningList.length; i2++) {
                 tempMeaningList.push(elementsMeaningList[i2].innerText);
             }
             meaningList.push(tempMeaningList);
-          //
-          // create reading string list
+            //
+            // create reading string list
             readingList.push(document.getElementsByClassName("furigana")[i].innerText)
-          //
+            //
         }
     }
     // Create button for each kanji tied to sendData
     function createButtons() {
         for (let i = 0; i < kanjiList.length; i++) {
-          // create button
+            // create button
             var btn = document.createElement('button');
             btn.innerHTML = `<button id='myButton${i}' type='button' style='height:10px'> +`;
             btn.addEventListener('click', function () {
                 sendData(kanjiList[i], meaningList[i], readingList[i]);
             });
-          //
-          // put button onto website page
+            //
+            // put button onto website page
             document.getElementsByClassName("concept_light-representation")[i].appendChild(btn);
-          //
+            //
         }
     }
     // Send data tied to singular button
