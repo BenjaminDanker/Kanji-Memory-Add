@@ -30,7 +30,7 @@ module.exports = {
             currentTime = new Date().getTime()
             const fourhours = 1000 * 60 * 60 * 4
             nextReviewTime = currentTime + fourhours
-
+            
             con.query(`INSERT INTO vocab (parent_ID, kanji, meaning, reading, stage, nextReviewTime) VALUES ('${userID}', '${data.kanjiToBeReviewed}', '${data.meaningToBeReviewed}', '${data.readingToBeReviewed}', 0, ${nextReviewTime});`);
         }
         finally {
@@ -116,10 +116,10 @@ module.exports = {
         //con.query("DROP TABLE vocab");
         //con.query("DROP TABLE userInfo");
         //con.query(`INSERT INTO test (kanji, meaning, reading, stage, latestReviewTime) VALUES ('${data.kanjiToBeReviewed}', '${data.meaningToBeReviewed}', '${data.readingToBeReviewed}', 0, ${timeOfReview});`);
-        //con.query(`SELECT * FROM vocab WHERE parent_ID LIKE 3`, function (err, result) { if (err) console.log(err); console.log(result); })
+        con.query(`SELECT * FROM vocab WHERE parent_ID LIKE 2`, function (err, result) { if (err) console.log(err); console.log(result); })
         //con.query("SELECT * FROM userInfo", function (err, result) { if (err) console.log(err); console.log(result); })
-        con.query("SELECT * FROM sessions", function (err, result) { if (err) console.log(err); console.log(result); })
-        //con.query("DELETE FROM sessions");
+        //con.query("SELECT * FROM sessions", function (err, result) { if (err) console.log(err); console.log(result); })
+        //con.query("DELETE FROM vocab");
         con.end();
     }
 }

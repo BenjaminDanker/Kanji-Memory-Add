@@ -8,6 +8,7 @@
     <div class="kanjiHolder">
         <div id="navHolder">
             <a id="reviewHomeHref" href="/">Home</a>
+            <p id="remainingCounter">0</p>
         </div>
 
         <div id="kanjiTextHolder">
@@ -30,6 +31,11 @@
             document.getElementById("correctButton").addEventListener("click", correct, false);
 
             var reviewList = <%-JSON.stringify(reviewList)%>
+
+            var reviewRemainingCount = reviewList.length;
+
+            // change initial remaining review count
+            document.getElementById("remainingCounter").innerHTML = reviewRemainingCount;
 
             // change initial kanji text
             document.getElementById("kanji").innerHTML = reviewList[0].kanji
@@ -62,6 +68,12 @@
                 }
                 else {
                     i += 1
+
+                    // replace counter with remaining review count
+                    reviewRemainingCount -= 1
+                    document.getElementById("remainingCounter").innerHTML = reviewRemainingCount;
+
+                    // replace kanji text
                     document.getElementById("kanji").innerHTML = reviewList[i].kanji
                 }
             }
