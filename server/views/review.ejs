@@ -28,7 +28,7 @@
     </div>
 
     <div class="infoHolder">
-        <details class="dropdownInfo">
+        <details class="dropdownInfo" id="vocabInfo">
             <summary>Info</summary>
             <p id="meaningInfo">meaningText</p>
             <p id="readingInfo">readingText</p>
@@ -38,6 +38,8 @@
     <script>
         document.getElementById("incorrectButton").addEventListener("click", incorrect, false);
         document.getElementById("correctButton").addEventListener("click", correct, false);
+
+        document.body.addEventListener("keydown", keyShortcuts, false);
 
         // formatting often puts spaces between %% which creates syntax error
         var reviewList = <%-JSON.stringify(reviewList)%>
@@ -91,7 +93,7 @@
                 document.getElementById("readingInfo").innerHTML = reviewList[i].reading
 
                 // close details info
-                document.getElementsByTagName("details")[0].removeAttribute("open");
+                document.getElementById("vocabInfo").removeAttribute("open");
             }
         }
         function incorrect() {
@@ -108,6 +110,21 @@
             reviewList[i].stage += 1
 
             changeKanji()
+        }
+        function keyShortcuts(event) {
+            console.log(event.key)
+            // minus key shortcut, incorrect, shift with minus gives underscore for event.key
+            if (event.key === "_") {
+                incorrect();
+            }
+            // plus key shortcut, correct
+            else if (event.key === "+") {
+                correct();
+            }
+            // left bracket shortcut, close details info
+            else if (event.key === "{") {
+                document.getElementById("vocabInfo").open = true;
+            }
         }
     </script>
 
