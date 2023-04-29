@@ -17,9 +17,6 @@ app.use(session({
 }));
 app.listen(3000);
 
-//TODO 
-// create shortcut keys for incorrect and correct buttons, and opening info
-// fix css to use multiple classes example: css .noPadding{} .backgroundBlue{}   html  <div class='noPadding backgroundBlue'></div>
 
 // Handle request to add vocabulary to database
 app.post("/addVocab", function (req, res) {
