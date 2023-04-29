@@ -77,7 +77,7 @@ app.post("/addLogin", function (req, res) {
 
 // Handle request to logout
 app.get("/logout", function (req, res) {
-    req.session.userID = undefined;
+    req.session.destroy()
 
     res.render("index.ejs", { loggedin: false });
 });
