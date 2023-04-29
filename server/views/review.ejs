@@ -5,7 +5,7 @@
 </head>
 <body>
 
-    <div class="kanjiHolder">
+    <div id="kanjiHolder">
         <div id="navHolder">
             <a id="reviewHomeHref" href="/">Home</a>
             <p id="remainingCounter">0</p>
@@ -18,17 +18,17 @@
 
     <hr id="reviewSeparation">
 
-    <div class="buttonHolder">
-        <input type="button" id="incorrectButton" class="chooseButton" value="Incorrect" />
-        <input type="button" id="correctButton" class="chooseButton" value="Correct" />
+    <div id="buttonHolder">
+        <input type="button" id="incorrectButton" class="wideButton" value="Incorrect" />
+        <input type="button" id="correctButton" class="wideButton" value="Correct" />
 
         <form id="reviewForm" action="/reviewEnd" method="post">
             <input id="reviewInput" type="hidden" name="reviewList" value="">
         </form>
     </div>
 
-    <div class="infoHolder">
-        <details class="dropdownInfo" id="vocabInfo">
+    <div id="infoHolder">
+        <details id="vocabInfo">
             <summary>Info</summary>
             <p id="meaningInfo">meaningText</p>
             <p id="readingInfo">readingText</p>

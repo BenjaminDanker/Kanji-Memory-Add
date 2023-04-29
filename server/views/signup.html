@@ -5,28 +5,28 @@
 </head>
 <body id="signupBody">
 
-    <div class="navbar">
-        <a class="homeHref" href="/">Kanji Memory Add</a>
-        <a class="lsHref" href="/signup.html">sign up</a>
-        <a class="lsHref" href="/login.html">login</a>
+    <div id="navbar">
+        <a class="navbarLinks" id="navbarHome" href="/">Kanji Memory Add</a>
+        <a class="navbarLinks navbarRightside" href="/signup.html">sign up</a>
+        <a class="navbarLinks navbarRightside" href="/login.html">login</a>
     </div>
 
     <form action="/addSignup" method="post">
         <div class="container">
             <h1>Sign Up</h1>
-            <hr>
+            <hr class="horizontalLine">
 
             <label>Username</label>
-            <input class="epInput" type="text" placeholder="Username" name="username" required>
+            <input class="wideInput" type="text" placeholder="Username" name="username" required>
 
             <label>Email</label>
-            <input class="epInput" type="text" placeholder="Email" name="email" required>
+            <input class="wideInput" type="text" placeholder="Email" name="email" required>
 
             <label>Password</label>
-            <input class="epInput" type="password" placeholder="Password" name="password" required>
+            <input class="wideInput" type="password" placeholder="Password" name="password" required>
 
             <div class="clearfix">
-                <button class="signupbtn" type="submit">Sign Up</button>
+                <button class="wideButton" type="submit">Sign Up</button>
             </div>
         </div>
     </form>

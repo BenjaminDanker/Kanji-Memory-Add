@@ -6,20 +6,20 @@
 <body>
 
 
-    <div class="navbar">
-        <a class="homeHref" href="/">Kanji Memory Add</a>
+    <div id="navbar">
+        <a class="navbarLinks" id="navbarHome" href="/">Kanji Memory Add</a>
         <% if (loggedin === true) { %>
-            <a class="lsHref" href="/logout">logout</a>
-            <p id="username"> <%= username %> </p>
+            <a class="navbarLinks navbarRightside" href="/logout">logout</a>
+            <p class="navbarRightside"> <%= username %> </p>
         <% } else {%>
-            <a class="lsHref" href="/signup.html">sign up</a>
-            <a class="lsHref" href="/login.html">login</a>
+            <a class="navbarLinks navbarRightside" href="/signup.html">sign up</a>
+            <a class="navbarLinks navbarRightside" href="/login.html">login</a>
         <% } %>
     </div>
 
-    <div class="mainArea">
+    <div id="mainArea">
         <% if (loggedin === true) { %> 
-            <a class="mainHref" href="/review">Review <span id="reviewLength"><%= reviewLength %></span></a>
+            <a class="mainHref" href="/review">Review <span id="reviewCounter"><%= reviewLength %></span></a>
         <% } %>
     </div>
 
