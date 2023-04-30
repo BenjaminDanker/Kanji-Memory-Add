@@ -23,7 +23,7 @@
         <input type="button" id="correctButton" class="wideButton" value="Correct" />
 
         <form id="reviewForm" action="/reviewEnd" method="post">
-            <input id="reviewInput" type="hidden" name="reviewList" value="">
+            <input id="reviewInput" type="hidden" name="checkIfList" value="">
         </form>
     </div>
 
@@ -46,6 +46,9 @@
 
         var reviewRemainingCount = reviewList.length;
 
+        // list of objects carrying if vocab was correct or incorrect
+        var checkIfList = [];
+
         // change initial remaining review count
         document.getElementById("remainingCounter").innerHTML = reviewRemainingCount;
 
@@ -54,32 +57,15 @@
         document.getElementById("meaningInfo").innerHTML = reviewList[0].meaning
         document.getElementById("readingInfo").innerHTML = reviewList[0].reading
 
-        // hashmap creation
-        const fourhours = 1000 * 60 * 60 * 4
-        const eighthours = 1000 * 60 * 60 * 4
-        const oneday = 1000 * 60 * 60 * 24
-        const twodays = 1000 * 60 * 60 * 24 * 2
-        const oneweek = 1000 * 60 * 60 * 24 * 7
-        const twoweeks = 1000 * 60 * 60 * 24 * 7 * 2
-        const fourmonths = 10512000000
-
-        const stageTimesMap = new Map();
-        stageTimesMap.set(0, fourhours);
-        stageTimesMap.set(1, eighthours);
-        stageTimesMap.set(2, oneday);
-        stageTimesMap.set(3, twodays);
-        stageTimesMap.set(4, oneweek);
-        stageTimesMap.set(5, twoweeks);
-        stageTimesMap.set(6, fourmonths);
-        //
-
         i = 0
 
         function changeKanji() {
+            // review end
             if (i + 1 === reviewList.length) {
-                document.getElementById("reviewInput").value = JSON.stringify(reviewList);
+                document.getElementById("reviewInput").value = JSON.stringify(checkIfList);
                 document.getElementById("reviewForm").submit();
             }
+            // next vocab
             else {
                 i += 1
 
@@ -97,22 +83,17 @@
             }
         }
         function incorrect() {
+            // vocabID currently not in use, future proofing
+            checkIfList.push({ "vocabID": reviewList[i].vocabID, "check": false })
+
             changeKanji()
         }
         function correct() {
-            // set the next time to review
-            currentTime = new Date().getTime();
-            var nextTime = stageTimesMap.get(parseInt(reviewList[i].stage))
-
-            reviewList[i].nextReviewTime = currentTime + nextTime
-            //
-
-            reviewList[i].stage += 1
+            checkIfList.push({ "vocabID": reviewList[i].vocabID, "check": true })
 
             changeKanji()
         }
         function keyShortcuts(event) {
-            console.log(event.key)
             // minus key shortcut, incorrect, shift with minus gives underscore for event.key
             if (event.key === "_") {
                 incorrect();

@@ -17,6 +17,9 @@ app.use(session({
 }));
 app.listen(3000);
 
+//TODO
+// in review.ejs change sending back reviewlist to list of correct/incorrect, including updateVocab. Security issue
+
 
 // Handle request to add vocabulary to database
 app.post("/addVocab", function (req, res) {
@@ -98,6 +101,8 @@ app.get("/review", isLoggedin, function (req, res) {
     sql_organize.getVocab(req.session.userID).then(function (vocabList) {
         let reviewList = util_functions.getReviewList(vocabList);
 
+        req.session.reviewList = reviewList
+
         if (reviewList.length > 0) {
             res.render("review.ejs", { reviewList });
         }
@@ -109,9 +114,11 @@ app.get("/review", isLoggedin, function (req, res) {
 
 // Handles call for end of review
 app.post("/reviewEnd", function (req, res) {
-    let reviewList = JSON.parse(req.body.reviewList);
+    let checkIfList = JSON.parse(req.body.checkIfList);
 
-    sql_organize.updateVocab(reviewList);
+    sql_organize.updateVocab(checkIfList, req.session.reviewList);
+
+    req.session.reviewList = []
 
     res.redirect("/");
 });
