@@ -34,34 +34,34 @@ function makeConnection() {
     con.connect((err) => {
         if (err) console.log(err);
         console.log("Connection Established");
-    })
+    });
 
     return con;
 }
 
 module.exports = {
-    // Put vocabulary info into database from userscript
-    insertVocab: function (data, userID) {
-        let con = makeConnection();
-
-        try {
-            currentTime = new Date().getTime()
-            const fourhours = 1000 * 60 * 60 * 4
-            nextReviewTime = currentTime + fourhours
-
-            con.query(`INSERT INTO vocab (parent_ID, kanji, meaning, reading, stage, nextReviewTime) VALUES ("${userID}", "${data.kanjiToBeReviewed}", "${data.meaningToBeReviewed}", "${data.readingToBeReviewed}", 0, ${nextReviewTime});`);
-        }
-        finally {
-            con.end();
-        }
-    },
-
     // get msqyl connection for session storage
     getSessionConnection: function () {
         const con = mysql.createConnection(options);
         const sessionStore = new MySQLStore({}, con);
 
         return sessionStore;
+    },
+
+    // Put vocabulary info into database from userscript
+    insertVocab: function (data, userID) {
+        let con = makeConnection();
+
+        try {
+            currentTime = new Date().getTime();
+            const fourhours = 1000 * 60 * 60 * 4;
+            nextReviewTime = currentTime + fourhours;
+
+            con.query(`INSERT INTO vocab (parent_ID, kanji, meaning, reading, stage, nextReviewTime) VALUES ("${userID}", "${data.kanjiToBeReviewed}", "${data.meaningToBeReviewed}", "${data.readingToBeReviewed}", 0, ${nextReviewTime});`);
+        }
+        finally {
+            con.end();
+        }
     },
 
     // Get vocab
@@ -73,7 +73,7 @@ module.exports = {
                 con.query(`SELECT * FROM vocab WHERE parent_ID LIKE ${userID}`, function (err, vocabList) {
                     if (err) console.log(err);
                     return resolve(vocabList);
-                })
+                });
             }
             finally {
                 con.end();
@@ -90,14 +90,14 @@ module.exports = {
                 if (checkIfList[i].check === true) {
                     // set the next time to review
                     currentTime = new Date().getTime();
-                    var nextTime = stageTimesMap.get(parseInt(reviewList[i].stage))
+                    var nextTime = stageTimesMap.get(parseInt(reviewList[i].stage));
 
-                    reviewList[i].nextReviewTime = currentTime + nextTime
+                    reviewList[i].nextReviewTime = currentTime + nextTime;
                     //
 
-                    reviewList[i].stage += 1
+                    reviewList[i].stage += 1;
 
-                    con.query(`UPDATE vocab SET stage=${reviewList[i].stage}, nextReviewTime=${reviewList[i].nextReviewTime} WHERE vocabID=${reviewList[i].vocabID}`)
+                    con.query(`UPDATE vocab SET stage=${reviewList[i].stage}, nextReviewTime=${reviewList[i].nextReviewTime} WHERE vocabID=${reviewList[i].vocabID}`);
                 }
             }
         }
@@ -128,7 +128,7 @@ module.exports = {
                 con.query(`SELECT * FROM userInfo WHERE email LIKE '${data.email}'`, function (err, result) {
                     if (err) console.log(err);
                     return resolve(result);
-                })
+                });
             }
             finally {
                 con.end();

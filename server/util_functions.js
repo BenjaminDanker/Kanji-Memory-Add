@@ -11,6 +11,6 @@ module.exports = {
             }
         }
 
-        return reviewList
+        return reviewList;
     }
 }

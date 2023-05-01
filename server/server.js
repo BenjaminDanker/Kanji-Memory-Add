@@ -1,5 +1,5 @@
 ﻿const sql_organize = require("./sql_organize");
-const util_functions = require("./util_functions")
+const util_functions = require("./util_functions");
 const express = require("express");
 const session = require("express-session");
 
@@ -16,9 +16,6 @@ app.use(session({
     saveUninitialized: false
 }));
 app.listen(3000);
-
-//TODO
-// in review.ejs change sending back reviewlist to list of correct/incorrect, including updateVocab. Security issue
 
 
 // Handle request to add vocabulary to database
@@ -70,7 +67,7 @@ app.post("/addLogin", function (req, res) {
     sql_organize.getUserInfo(data).then(function (userInfo) {
         if (userInfo[0].password === data.password) {
             req.session.userID = userInfo[0].userID;
-            req.session.username = userInfo[0].username
+            req.session.username = userInfo[0].username;
 
             res.redirect("/");
         }
@@ -80,7 +77,7 @@ app.post("/addLogin", function (req, res) {
 
 // Handle request to logout
 app.get("/logout", function (req, res) {
-    req.session.destroy()
+    req.session.destroy();
 
     res.render("index.ejs", { loggedin: false });
 });
@@ -101,7 +98,7 @@ app.get("/review", isLoggedin, function (req, res) {
     sql_organize.getVocab(req.session.userID).then(function (vocabList) {
         let reviewList = util_functions.getReviewList(vocabList);
 
-        req.session.reviewList = reviewList
+        req.session.reviewList = reviewList;
 
         if (reviewList.length > 0) {
             res.render("review.ejs", { reviewList });
@@ -118,7 +115,7 @@ app.post("/reviewEnd", function (req, res) {
 
     sql_organize.updateVocab(checkIfList, req.session.reviewList);
 
-    req.session.reviewList = []
+    req.session.reviewList = [];
 
     res.redirect("/");
 });

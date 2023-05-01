@@ -28,7 +28,7 @@
             }
             //
             // create meaning string list
-            const tempMeaningList = []
+            const tempMeaningList = [];
             const elementsMeaningList = elementsWordsList[i].getElementsByClassName("meaning-meaning");
             for (let i2 = 0; i2 < elementsMeaningList.length; i2++) {
                 tempMeaningList.push(elementsMeaningList[i2].innerText);
@@ -36,7 +36,7 @@
             meaningList.push(tempMeaningList);
             //
             // create reading string list
-            readingList.push(document.getElementsByClassName("furigana")[i].innerText)
+            readingList.push(document.getElementsByClassName("furigana")[i].innerText);
             //
         }
     }

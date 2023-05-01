@@ -42,7 +42,7 @@
         document.body.addEventListener("keydown", keyShortcuts, false);
 
         // formatting often puts spaces between %% which creates syntax error
-        var reviewList = <%-JSON.stringify(reviewList)%>
+        var reviewList = <%-JSON.stringify(reviewList)%>;
 
         var reviewRemainingCount = reviewList.length;
 
@@ -53,9 +53,9 @@
         document.getElementById("remainingCounter").innerHTML = reviewRemainingCount;
 
         // change initial kanji
-        document.getElementById("kanji").innerHTML = reviewList[0].kanji
-        document.getElementById("meaningInfo").innerHTML = reviewList[0].meaning
-        document.getElementById("readingInfo").innerHTML = reviewList[0].reading
+        document.getElementById("kanji").innerHTML = reviewList[0].kanji;
+        document.getElementById("meaningInfo").innerHTML = reviewList[0].meaning;
+        document.getElementById("readingInfo").innerHTML = reviewList[0].reading;
 
         i = 0
 
@@ -67,16 +67,16 @@
             }
             // next vocab
             else {
-                i += 1
+                i += 1;
 
                 // replace counter with remaining review count
-                reviewRemainingCount -= 1
+                reviewRemainingCount -= 1;
                 document.getElementById("remainingCounter").innerHTML = reviewRemainingCount;
 
                 // replace kanji
-                document.getElementById("kanji").innerHTML = reviewList[i].kanji
-                document.getElementById("meaningInfo").innerHTML = reviewList[i].meaning
-                document.getElementById("readingInfo").innerHTML = reviewList[i].reading
+                document.getElementById("kanji").innerHTML = reviewList[i].kanji;
+                document.getElementById("meaningInfo").innerHTML = reviewList[i].meaning;
+                document.getElementById("readingInfo").innerHTML = reviewList[i].reading;
 
                 // close details info
                 document.getElementById("vocabInfo").removeAttribute("open");
@@ -84,14 +84,14 @@
         }
         function incorrect() {
             // vocabID currently not in use, future proofing
-            checkIfList.push({ "vocabID": reviewList[i].vocabID, "check": false })
+            checkIfList.push({ "vocabID": reviewList[i].vocabID, "check": false });
 
-            changeKanji()
+            changeKanji();
         }
         function correct() {
-            checkIfList.push({ "vocabID": reviewList[i].vocabID, "check": true })
+            checkIfList.push({ "vocabID": reviewList[i].vocabID, "check": true });
 
-            changeKanji()
+            changeKanji();
         }
         function keyShortcuts(event) {
             // minus key shortcut, incorrect, shift with minus gives underscore for event.key
