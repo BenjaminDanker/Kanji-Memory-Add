@@ -17,6 +17,9 @@ app.use(session({
 }));
 app.listen(3000);
 
+//TODO
+// redirect to index.ejs after signup page as signed in
+
 
 // Handle request to add vocabulary to database
 app.post("/addVocab", function (req, res) {
@@ -49,6 +52,11 @@ app.get("/", function (req, res) {
     }
 });
 
+// Handle signup page
+app.get("/signup", function (req, res) {
+    res.render("signup.ejs");
+});
+
 // Handle request to signup
 app.post("/addSignup", function (req, res) {
     data = req.body;
@@ -56,7 +64,12 @@ app.post("/addSignup", function (req, res) {
     // put email and password into database
     sql_organize.insertUserInfo(data);
 
-    res.redirect("/login.html");
+    res.redirect("/login.ejs");
+});
+
+// Handle login page
+app.get("/login", function (req, res) {
+    res.render("login.ejs", { ifInfo: true });
 });
 
 // Handle request to login
@@ -65,7 +78,10 @@ app.post("/addLogin", function (req, res) {
 
   // get/verify email and password, then make user session
     sql_organize.getUserInfo(data).then(function (userInfo) {
-        if (userInfo[0].password === data.password) {
+        if (userInfo.length === 0) {
+            res.render("login.ejs", { ifInfo: false });
+        }
+        else {
             req.session.userID = userInfo[0].userID;
             req.session.username = userInfo[0].username;
 

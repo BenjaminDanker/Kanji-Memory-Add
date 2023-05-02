@@ -7,14 +7,18 @@
 
     <div id="navbar">
         <a class="navbarLinks" id="navbarHome" href="/">Kanji Memory Add</a>
-        <a class="navbarLinks navbarRightside" href="/signup.html">sign up</a>
-        <a class="navbarLinks navbarRightside" href="/login.html">login</a>
+        <a class="navbarLinks navbarRightside" href="/signup">sign up</a>
+        <a class="navbarLinks navbarRightside" href="/login">login</a>
     </div>
 
     <form action="/addLogin" method="post">
         <div class="container">
             <h1>Login</h1>
             <hr class="horizontalLine">
+
+            <% if (ifInfo === false) { %>
+                <p id="incorrectLoginInfoText">Incorrect Login Information</p>
+            <% } %>
 
             <label>Email</label>
             <input class="wideInput" type="text" placeholder="Email" name="email" required autofocus>

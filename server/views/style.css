@@ -115,8 +115,18 @@ body {
 
 
 
-/* review page */
 
+/* login page */
+
+#incorrectLoginInfoText {
+    color: darkred;
+}
+
+/*  */
+
+
+
+/* review page */
 #kanjiHolder {
     width: 100%;
     height: 40%;
