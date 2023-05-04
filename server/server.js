@@ -17,9 +17,6 @@ app.use(session({
 }));
 app.listen(3000);
 
-//TODO
-// redirect to index.ejs after signup page as signed in
-
 
 // Handle request to add vocabulary to database
 app.post("/addVocab", async function (req, res) {
@@ -29,7 +26,7 @@ app.post("/addVocab", async function (req, res) {
     let userInfo = await sql_organize.getUserInfo(data)
     if (userInfo[0].password === data.password) {
         sql_organize.insertVocab(data, userInfo[0].userID);
-        }
+    }
   //
 });
 
@@ -40,13 +37,13 @@ app.get("/", async function (req, res) {
     }
     else {
         let vocabList = await sql_organize.getVocab(req.session.userID)
-            let reviewList = util_functions.getReviewList(vocabList);
+        let reviewList = util_functions.getReviewList(vocabList);
 
-            res.render("index.ejs", {
-                loggedin: true,
-                username: req.session.username,
-                reviewLength: reviewList.length
-            });
+        res.render("index.ejs", {
+            loggedin: true,
+            username: req.session.username,
+            reviewLength: reviewList.length
+        });
     }
 });
 
@@ -59,10 +56,17 @@ app.get("/signup", function (req, res) {
 app.post("/addSignup", async function (req, res) {
     data = req.body;
 
-    // put email and password into database
-    sql_organize.insertUserInfo(data);
+    // put username, email, and password into database
+    await sql_organize.insertUserInfo(data);
 
-    res.redirect("/login.ejs");
+  // make user session then send back to index.ejs
+    let userInfo = await sql_organize.getUserInfo(data);
+
+    req.session.userID = userInfo[0].userID;
+    req.session.username = userInfo[0].username;
+
+    res.redirect("/");
+  //
 });
 
 // Handle login page
@@ -77,15 +81,15 @@ app.post("/addLogin", async function (req, res) {
   // get/verify email and password, then make user session
     let userInfo = await sql_organize.getUserInfo(data)
 
-        if (userInfo.length === 0) {
-            res.render("login.ejs", { ifInfo: false });
-        }
-        else {
-            req.session.userID = userInfo[0].userID;
-            req.session.username = userInfo[0].username;
+    if (userInfo.length === 0) {
+        res.render("login.ejs", { ifInfo: false });
+    }
+    else {
+        req.session.userID = userInfo[0].userID;
+        req.session.username = userInfo[0].username;
 
-            res.redirect("/");
-        }
+        res.redirect("/");
+    }
   //
 });
 
@@ -111,16 +115,16 @@ function isLoggedin(req, res, next) {
 app.get("/review", isLoggedin, async function (req, res) {
     let vocabList = await sql_organize.getVocab(req.session.userID)
 
-        let reviewList = util_functions.getReviewList(vocabList);
+    let reviewList = util_functions.getReviewList(vocabList);
 
-        req.session.reviewList = reviewList;
+    req.session.reviewList = reviewList;
 
-        if (reviewList.length > 0) {
-            res.render("review.ejs", { reviewList });
-        }
-        else {
-            res.redirect("/");
-        }
+    if (reviewList.length > 0) {
+        res.render("review.ejs", { reviewList });
+    }
+    else {
+        res.redirect("/");
+    }
 });
 
 // Handles call for end of review
