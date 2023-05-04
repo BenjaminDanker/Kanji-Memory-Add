@@ -37,7 +37,9 @@ app.get("/", async function (req, res) {
     }
     else {
         let vocabList = await sql_organize.getVocab(req.session.userID)
-        let reviewList = util_functions.getReviewList(vocabList);
+
+        currentTime = new Date().getTime();
+        let reviewList = util_functions.getReviewList(vocabList, currentTime);
 
         res.render("index.ejs", {
             loggedin: true,
@@ -115,9 +117,11 @@ function isLoggedin(req, res, next) {
 app.get("/review", isLoggedin, async function (req, res) {
     let vocabList = await sql_organize.getVocab(req.session.userID)
 
-    let reviewList = util_functions.getReviewList(vocabList);
+    currentTime = new Date().getTime();
+    let reviewList = util_functions.getReviewList(vocabList, currentTime);
 
-    req.session.reviewList = reviewList;
+    // put time of when review is started into session
+    req.session.currentTime = currentTime;
 
     if (reviewList.length > 0) {
         res.render("review.ejs", { reviewList });
@@ -128,14 +132,18 @@ app.get("/review", isLoggedin, async function (req, res) {
 });
 
 // Handles call for end of review
-app.post("/reviewEnd", function (req, res) {
+app.post("/reviewEnd", async function (req, res) {
     let checkIfList = JSON.parse(req.body.checkIfList);
 
-    sql_organize.updateVocab(checkIfList, req.session.reviewList);
+    let vocabList = await sql_organize.getVocab(req.session.userID)
+    let reviewList = util_functions.getReviewList(vocabList, req.session.currentTime);
 
-    req.session.reviewList = [];
+    sql_organize.updateVocab(checkIfList, reviewList);
+
+    // reset session current time for debugging purposes
+    req.session.currentTime = 0;
 
     res.redirect("/");
 });
 
-//sql_organize.variousSQL();
+sql_organize.variousSQL();

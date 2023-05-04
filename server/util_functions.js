@@ -1,7 +1,6 @@
 module.exports = {
     // Put only vocab past review due date into new list
-    getReviewList: function (vocabList) {
-        currentTime = new Date().getTime();
+    getReviewList: function (vocabList, currentTime) {
         let reviewList = [];
 
         for (let i = 0; i < vocabList.length; i++) {
