@@ -2,6 +2,10 @@
   "name": "repos",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": ">=18.15.0"
+  },
+  "private": true,
   "scripts": {
     "devStart": "nodemon server.js",
     "start": "node server.js"
@@ -10,13 +14,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.7.4",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-mysql-session": "^3.0.0",
+    "express-rate-limit": "^6.7.0",
     "express-session": "^1.17.3",
-    "jquery": "^3.6.4",
-    "jQuery": "^1.7.4",
-    "mysql": "^2.18.1",
+    "helmet": "^7.0.0",
     "mysql2": "^3.2.1"
   },
   "devDependencies": {

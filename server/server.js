@@ -2,19 +2,37 @@
 const util_functions = require("./util_functions");
 const express = require("express");
 const session = require("express-session");
+const compression = require("compression");
+const helmet = require("helmet");
+const RateLimit = require("express-rate-limit");
+
+
+const address = "localhost";
 
 
 const app = express();
-app.set("view engine", "ejs");
-app.use(express.static("views"));
-app.use(express.urlencoded({ extended: true }));
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            scriptSrc: ["'self'", "'unsafe-inline'", address]
+        }
+    }
+}));
+app.use(RateLimit({
+    windowMs: 1000 * 60,
+    max: 20
+}));
 app.use(session({
     secret: "unknownsecret",
     store: sql_organize.getSessionConnection(),
-    cookie: {secure: false, maxAge: 500000000000},
+    cookie: { secure: false, maxAge: 500000000000 },
     resave: false,
     saveUninitialized: false
 }));
+app.use(compression());
+app.set("view engine", "ejs");
+app.use(express.static("views"));
+app.use(express.urlencoded({ extended: true }));
 app.listen(3000);
 
 
@@ -146,4 +164,4 @@ app.post("/reviewEnd", async function (req, res) {
     res.redirect("/");
 });
 
-sql_organize.variousSQL();
+//sql_organize.variousSQL();
