@@ -24,8 +24,8 @@
             <input class="wideInput" type="text" placeholder="Email" name="email" required pattern="((?=.*[@]).{5,30})">
 
             <label>Password</label>
-            <!-- regex, require, one digit = ((?=.*\d), one lowercase = (?=.*[a-z]), one uppercase = (?=.*[A-Z]), special characters = (?=.*[!@#$%^&*()_+]), . = match anything with previous condition checking, min 8 max 20 = {8,20} -->
-            <input class="wideInput" type="password" placeholder="Password" name="password" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+]).{8,20})">
+            <!-- regex, require, one digit = ((?=.*\d), one lowercase = (?=.*[a-z]), one uppercase = (?=.*[A-Z]), . = match anything with previous condition checking, min 8 max 20 = {8,20} -->
+            <input class="wideInput" type="password" placeholder="Password" name="password" required pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20})">
 
             <div class="clearfix">
                 <button class="wideButton" type="submit">Sign Up</button>
