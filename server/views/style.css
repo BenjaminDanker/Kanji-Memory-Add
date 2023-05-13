@@ -1,5 +1,6 @@
 body {
-    background-color: rgb(50,50,50);
+    background: repeating-linear-gradient(45deg, white, grey, white 1px);
+    background-attachment: fixed;
     margin: 0;
 }
 
@@ -52,8 +53,9 @@ body {
 /* navbar */
 
 #navbar {
-    background-color: #00FFFF;
+    background-color: #760fad;
     overflow: hidden;
+    border: 1px solid #0b0852;
     border-radius: 10px;
     width: 80%;
     margin: 3% auto;
@@ -97,6 +99,7 @@ body {
 
 .mainHref {
     background-color: #8A2BE2;
+    border: 1px solid #0b0852;
     border-radius: 10px;
     text-decoration: none;
     color: black;
