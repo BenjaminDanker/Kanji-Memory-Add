@@ -7,6 +7,7 @@ body {
 /* multipage styles */
 
 .container { /* used in signup, login */
+    background-color: #8472e1;
     border: 1px solid #ccc;
     border-radius: 10px;
     margin: 10% 30%;
@@ -133,7 +134,7 @@ body {
 #kanjiHolder {
     width: 100%;
     height: 40%;
-    background-color: #00FFFF;
+    background-color: #8472e1;
     display: flex;
     flex-direction: column;
 }
