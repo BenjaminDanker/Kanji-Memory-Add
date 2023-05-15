@@ -121,7 +121,7 @@ body {
 
 /* login page */
 
-#incorrectLoginInfoText {
+#incorrectText {
     color: darkred;
 }
 

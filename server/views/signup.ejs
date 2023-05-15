@@ -16,6 +16,10 @@
             <h1>Sign Up</h1>
             <hr class="horizontalLine">
 
+            <% if (ifInfo === true) { %>
+            <p id="incorrectText">Email is already in use</p>
+            <% } %>
+
             <label>Username</label>
             <input class="wideInput" type="text" placeholder="Username" name="username" required autofocus maxlength="20">
 

@@ -69,24 +69,31 @@ app.get("/", async function (req, res) {
 
 // Handle signup page
 app.get("/signup", function (req, res) {
-    res.render("signup.ejs");
+    res.render("signup.ejs", { ifInfo: false});
 });
 
 // Handle request to signup
 app.post("/addSignup", async function (req, res) {
     data = req.body;
 
-    // put username, email, and password into database
-    await sql_organize.insertUserInfo(data);
+    // if already registered
+    let tempInfo = await sql_organize.getUserInfo(data);
+    if (tempInfo.length > 0) {
+        res.render("signup.ejs", { ifInfo: true });
+    }
+    else {
+        // put username, email, and password into database
+        await sql_organize.insertUserInfo(data);
 
-  // make user session then send back to index.ejs
-    let userInfo = await sql_organize.getUserInfo(data);
+        // make user session from signup data then send back to index.ejs
+        let userInfo = await sql_organize.getUserInfo(data);
 
-    req.session.userID = userInfo[0].userID;
-    req.session.username = userInfo[0].username;
+        req.session.userID = userInfo[0].userID;
+        req.session.username = userInfo[0].username;
 
-    res.redirect("/");
-  //
+        res.redirect("/");
+        //
+    }
 });
 
 // Handle login page
