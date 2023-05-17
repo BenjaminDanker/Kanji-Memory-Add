@@ -23,10 +23,11 @@ stageTimesMap.set(6, fourmonths);
 //
 
 const options = {
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "kanjiList"
+    host: process.env.MYSQLHOST || "localhost",
+    user: process.env.MYSQLUSER || "root",
+    password: process.env.MYSQLPASSWORD || "password",
+    database: process.env.MYSQLDATABASE || "kanjiList",
+    port: process.env.MYSQLPORT || ""
 }
 
 // create mySQL connection 
