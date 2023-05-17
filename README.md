@@ -5,7 +5,7 @@ Add kanji and then review
 Userscript file with Tampermonkey to be used on jisho.org
 
 ## Server Dependencies
-```
+```console
 npm install
 
 compression
