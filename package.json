@@ -21,7 +21,7 @@
     "express-rate-limit": "^6.7.0",
     "express-session": "^1.17.3",
     "helmet": "^7.0.0",
-    "mysql2": "^3.2.1"
+    "mysql2": "^3.3.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
