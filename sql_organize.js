@@ -32,7 +32,7 @@ const options = {
 
 // create mySQL connection 
 function makeConnection() {
-    const con = mysql.createConnection(options);
+    const con = mysql.createConnection(process.env.JAWSDB_URL);
     console.log("Connection Established")
 
     return con;
