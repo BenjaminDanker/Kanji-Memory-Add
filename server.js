@@ -25,7 +25,7 @@ app.use(RateLimit({
 app.use(session({
     secret: "unknownsecret",
     store: sql_organize.getSessionConnection(),
-    cookie: { secure: false, maxAge: 500000000000 },
+    cookie: { secure: true, maxAge: 500000000000 },
     resave: false,
     saveUninitialized: false
 }));
