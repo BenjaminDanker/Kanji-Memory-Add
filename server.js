@@ -33,7 +33,7 @@ app.use(compression());
 app.set("view engine", "ejs");
 app.use(express.static("views"));
 app.use(express.urlencoded({ extended: true }));
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 
 
 // Handle request to add vocabulary to database
