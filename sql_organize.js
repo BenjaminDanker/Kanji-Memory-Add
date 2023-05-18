@@ -32,7 +32,7 @@ const options = {
 
 // create mySQL connection 
 function makeConnection() {
-    const con = mysql.createConnection(options);
+    const con = mysql.createConnection(process.env.JAWSDB_URL);
     console.log("Connection Established")
 
     return con;
@@ -41,7 +41,7 @@ function makeConnection() {
 module.exports = {
     // get msqyl connection for session storage
     getSessionConnection: function () {
-        const con = mysql2.createConnection(options);
+        const con = mysql2.createConnection(process.env.JAWSDB_URL);
         const sessionStore = new MySQLStore({}, con);
 
         return sessionStore;
