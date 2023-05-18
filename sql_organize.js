@@ -41,7 +41,7 @@ function makeConnection() {
 module.exports = {
     // get msqyl connection for session storage
     getSessionConnection: function () {
-        const con = mysql2.createConnection(options);
+        const con = mysql2.createConnection(process.env.JAWSDB_URL);
         const sessionStore = new MySQLStore({}, con);
 
         return sessionStore;

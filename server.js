@@ -25,7 +25,7 @@ app.use(RateLimit({
 app.use(session({
     secret: "unknownsecret",
     store: sql_organize.getSessionConnection(),
-    cookie: { secure: false, maxAge: 500000000000 },
+    cookie: { secure: true, maxAge: 500000000000 },
     resave: false,
     saveUninitialized: false
 }));
@@ -50,6 +50,7 @@ app.post("/addVocab", async function (req, res) {
 
 // Handle home page between logged in and logged out
 app.get("/", async function (req, res) {
+    console.log("/", "test1")
     if (req.session.userID === undefined) {
         res.render("index.ejs", { loggedin: false });
     }
