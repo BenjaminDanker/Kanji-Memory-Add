@@ -130,8 +130,8 @@ module.exports = {
     variousSQL: async function () {
         let con = await makeConnection();
 
-        //con.query("CREATE TABLE userInfo (userID int AUTO_INCREMENT, primary key(userID), username varchar(50), email varchar(30), password varchar(30))")
-        //con.query("CREATE TABLE vocab (parent_ID int, INDEX index_parent_ID (parent_ID), FOREIGN KEY (parent_ID) REFERENCES userInfo(userID) ON UPDATE CASCADE ON DELETE CASCADE, vocabID int AUTO_INCREMENT, primary key(vocabID), kanji varchar(50), meaning varchar(1000), reading varchar(50), stage int, nextReviewTime bigint)")
+        con.query("CREATE TABLE userInfo (userID int AUTO_INCREMENT, primary key(userID), username varchar(50), email varchar(30), password varchar(30))")
+        con.query("CREATE TABLE vocab (parent_ID int, INDEX index_parent_ID (parent_ID), FOREIGN KEY (parent_ID) REFERENCES userInfo(userID) ON UPDATE CASCADE ON DELETE CASCADE, vocabID int AUTO_INCREMENT, primary key(vocabID), kanji varchar(50), meaning varchar(1000), reading varchar(50), stage int, nextReviewTime bigint)")
         //con.query("DROP TABLE vocab");
         //con.query("DROP TABLE userInfo");
         //con.query(`INSERT INTO test (kanji, meaning, reading, stage, latestReviewTime) VALUES ('${data.kanjiToBeReviewed}', '${data.meaningToBeReviewed}', '${data.readingToBeReviewed}', 0, ${timeOfReview});`);

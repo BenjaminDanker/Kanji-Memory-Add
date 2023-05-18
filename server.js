@@ -50,6 +50,7 @@ app.post("/addVocab", async function (req, res) {
 
 // Handle home page between logged in and logged out
 app.get("/", async function (req, res) {
+    console.log("/", "test1")
     if (req.session.userID === undefined) {
         res.render("index.ejs", { loggedin: false });
     }
@@ -171,4 +172,4 @@ app.post("/reviewEnd", async function (req, res) {
     res.redirect("/");
 });
 
-//sql_organize.variousSQL();
+sql_organize.variousSQL();
