@@ -172,4 +172,4 @@ app.post("/reviewEnd", async function (req, res) {
     res.redirect("/");
 });
 
-//sql_organize.variousSQL();
+sql_organize.variousSQL();
