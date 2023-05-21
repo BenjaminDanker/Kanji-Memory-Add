@@ -53,7 +53,7 @@ module.exports = {
 
         try {
             let currentTime = new Date().getTime();
-            const fourhours = 1000;
+            const fourhours = 1000 * 60 * 60 * 4;
             let nextReviewTime = currentTime + fourhours;
 
             await con.query(`INSERT INTO vocab (parent_ID, kanji, meaning, reading, stage, nextReviewTime) VALUES ("${userID}", "${data.kanjiToBeReviewed}", "${data.meaningToBeReviewed}", "${data.readingToBeReviewed}", 0, ${nextReviewTime});`);
