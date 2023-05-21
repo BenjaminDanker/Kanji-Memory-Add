@@ -33,7 +33,7 @@ const options = {
 // create mySQL connection 
 function makeConnection() {
     const con = mysql.createConnection(options);
-    console.log("Connection Established")
+    console.log("Connection Established");
 
     return con;
 }
