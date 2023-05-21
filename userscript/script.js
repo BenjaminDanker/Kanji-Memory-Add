@@ -13,30 +13,23 @@
     const meaningList = [];
     const readingList = [];
     const URL = "http://localhost:3000/addVocab";
-    const EMAIL = "";
-    const PASSWORD = "";
-    // Put kanji, meaning, reading into respective lists
+    const EMAIL = "silverjunk08@gmail.com";
+    const PASSWORD = "fxDmu5FWiQ6NsXF";
+    // Put kanji, reading, and meaning into respective lists
     function getElementsWords() {
-        // get all words columns
-        const elementsWordsList = document.getElementsByClassName("concept_light clearfix");
+        const elementsKanjiReadingList = document.getElementsByClassName("concept_light-representation");
+        const elementsHolderMeaningList = document.getElementsByClassName("concept_light-meanings");
         //
-        for (let i = 0; i < elementsWordsList.length; i++) {
-            // create kanji string list
-            var kanjiTextElement = elementsWordsList[i].getElementsByClassName("text")
-            if (kanjiTextElement.length > 0) {
-                kanjiList.push(kanjiTextElement[0].innerText);
-            }
-            //
-            // create meaning string list
-            const tempMeaningList = [];
-            const elementsMeaningList = elementsWordsList[i].getElementsByClassName("meaning-meaning");
-            for (let i2 = 0; i2 < elementsMeaningList.length; i2++) {
-                tempMeaningList.push(elementsMeaningList[i2].innerText);
+        for (let i = 0; i < elementsKanjiReadingList.length; i++) {
+            kanjiList.push(elementsKanjiReadingList[i].children["0"].innerText); // kanji string list
+            readingList.push(elementsKanjiReadingList[i].children["1"].innerText); // reading string list
+            // nested meaning string list
+            var tempMeaningList = [];
+            var elementsMeaningList = elementsHolderMeaningList[i].getElementsByClassName("meaning-meaning");
+            for (let j = 0; j < elementsMeaningList.length; j++) {
+                tempMeaningList.push(elementsMeaningList[j].innerText);
             }
             meaningList.push(tempMeaningList);
-            //
-            // create reading string list
-            readingList.push(document.getElementsByClassName("furigana")[i].innerText);
             //
         }
     }
@@ -45,7 +38,7 @@
         for (let i = 0; i < kanjiList.length; i++) {
             // create button
             var btn = document.createElement('button');
-            btn.innerHTML = `<button id='myButton${i}' type='button' style='height:10px'> +`;
+            btn.innerHTML = `<button id='sendButton${i}' type='button' style='height:0px'> + </button>`;
             btn.addEventListener('click', function () {
                 sendData(kanjiList[i], meaningList[i], readingList[i]);
             });
@@ -74,6 +67,9 @@
             }
         });
     }
-    getElementsWords();
-    createButtons();
+    try {
+        getElementsWords();
+        createButtons();
+    }
+    catch (exception) { }
 })();
