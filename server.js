@@ -7,7 +7,7 @@ const helmet = require("helmet");
 const RateLimit = require("express-rate-limit");
 
 
-const address = "localhost";
+const address = "kanji-memory.herokuapp";
 
 
 const app = express();
