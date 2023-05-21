@@ -27,10 +27,14 @@
             var elementsMeaningList = elementsHolderMeaningList[i].getElementsByClassName("meaning-meaning");
             var meaningString = "";
             for (let j = 0; j < elementsMeaningList.length; j++) {
+                //grammar string
+                var grammarString = elementsMeaningList[j].parentNode.parentNode.previousSibling.innerText;
+                meaningString += grammarString + '\n';
+                //
+                // meaning string
                 meaningString += elementsMeaningList[j].innerText;
-                if (j < elementsMeaningList.length - 1) {
-                    meaningString += "\n";
-                }
+                meaningString += "\n\n";
+                //
             }
             meaningList.push(meaningString);
             //
