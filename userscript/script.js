@@ -24,12 +24,15 @@
             kanjiList.push(elementsKanjiReadingList[i].children["1"].innerText); // kanji string list
             readingList.push(elementsKanjiReadingList[i].children["0"].innerText); // reading string list
             // nested meaning string list
-            var tempMeaningList = [];
             var elementsMeaningList = elementsHolderMeaningList[i].getElementsByClassName("meaning-meaning");
+            var meaningString = "";
             for (let j = 0; j < elementsMeaningList.length; j++) {
-                tempMeaningList.push(elementsMeaningList[j].innerText);
+                meaningString += elementsMeaningList[j].innerText;
+                if (j < elementsMeaningList.length - 1) {
+                    meaningString += "\n";
+                }
             }
-            meaningList.push(tempMeaningList);
+            meaningList.push(meaningString);
             //
         }
     }
