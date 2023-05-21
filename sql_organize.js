@@ -119,7 +119,7 @@ module.exports = {
 
         try {
             let [result, fields] = await con.query(`SELECT * FROM userInfo WHERE email LIKE '${data.email}'`);
-            return result
+            return result;
         }
         finally {
             con.end();

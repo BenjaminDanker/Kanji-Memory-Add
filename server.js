@@ -55,7 +55,7 @@ app.get("/", async function (req, res) {
         res.render("index.ejs", { loggedin: false });
     }
     else {
-        let vocabList = await sql_organize.getVocab(req.session.userID)
+        let vocabList = await sql_organize.getVocab(req.session.userID);
 
         let currentTime = new Date().getTime();
         let reviewList = util_functions.getReviewList(vocabList, currentTime);
@@ -107,7 +107,7 @@ app.post("/addLogin", async function (req, res) {
     let data = req.body;
 
   // get/verify email and password, then make user session
-    let userInfo = await sql_organize.getUserInfo(data)
+    let userInfo = await sql_organize.getUserInfo(data);
 
     if (userInfo.length === 0) {
         res.render("login.ejs", { ifInfo: false });
@@ -141,7 +141,7 @@ function isLoggedin(req, res, next) {
 
 // Handle review page
 app.get("/review", isLoggedin, async function (req, res) {
-    let vocabList = await sql_organize.getVocab(req.session.userID)
+    let vocabList = await sql_organize.getVocab(req.session.userID);
 
     let currentTime = new Date().getTime();
     let reviewList = util_functions.getReviewList(vocabList, currentTime);
@@ -161,7 +161,7 @@ app.get("/review", isLoggedin, async function (req, res) {
 app.post("/reviewEnd", async function (req, res) {
     let checkIfList = JSON.parse(req.body.checkIfList);
 
-    let vocabList = await sql_organize.getVocab(req.session.userID)
+    let vocabList = await sql_organize.getVocab(req.session.userID);
     let reviewList = util_functions.getReviewList(vocabList, req.session.currentTime);
 
     sql_organize.updateVocab(checkIfList, reviewList);
