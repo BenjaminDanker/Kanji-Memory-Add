@@ -20,18 +20,14 @@
         // get all words columns
         const elementsWordsList = document.getElementsByClassName("concept_light clearfix");
         //
-        for (let i = 0; i < elementsWordsList.length; i++) {
-            // create kanji string list
-            var kanjiTextElement = elementsWordsList[i].getElementsByClassName("text")
-            if (kanjiTextElement.length > 0) {
-                kanjiList.push(kanjiTextElement[0].innerText);
-            }
-            //
-            // create meaning string list
-            const tempMeaningList = [];
-            const elementsMeaningList = elementsWordsList[i].getElementsByClassName("meaning-meaning");
-            for (let i2 = 0; i2 < elementsMeaningList.length; i2++) {
-                tempMeaningList.push(elementsMeaningList[i2].innerText);
+        for (let i = 0; i < elementsKanjiReadingList.length; i++) {
+            kanjiList.push(elementsKanjiReadingList[i].children["1"].innerText); // kanji string list
+            readingList.push(elementsKanjiReadingList[i].children["0"].innerText); // reading string list
+            // nested meaning string list
+            var tempMeaningList = [];
+            var elementsMeaningList = elementsHolderMeaningList[i].getElementsByClassName("meaning-meaning");
+            for (let j = 0; j < elementsMeaningList.length; j++) {
+                tempMeaningList.push(elementsMeaningList[j].innerText);
             }
             meaningList.push(tempMeaningList);
             //
