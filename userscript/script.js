@@ -21,8 +21,8 @@
         const elementsHolderMeaningList = document.getElementsByClassName("concept_light-meanings");
         //
         for (let i = 0; i < elementsKanjiReadingList.length; i++) {
-            kanjiList.push(elementsKanjiReadingList[i].children["0"].innerText); // kanji string list
-            readingList.push(elementsKanjiReadingList[i].children["1"].innerText); // reading string list
+            kanjiList.push(elementsKanjiReadingList[i].children["1"].innerText); // kanji string list
+            readingList.push(elementsKanjiReadingList[i].children["0"].innerText); // reading string list
             // nested meaning string list
             var tempMeaningList = [];
             var elementsMeaningList = elementsHolderMeaningList[i].getElementsByClassName("meaning-meaning");
