@@ -13,8 +13,8 @@
     const meaningList = [];
     const readingList = [];
     const URL = "http://localhost:3000/addVocab";
-    const EMAIL = "silverjunk08@gmail.com";
-    const PASSWORD = "fxDmu5FWiQ6NsXF";
+    const EMAIL = "";
+    const PASSWORD = "";
     // Put kanji, reading, and meaning into respective lists
     function getElementsWords() {
         const elementsKanjiReadingList = document.getElementsByClassName("concept_light-representation");
