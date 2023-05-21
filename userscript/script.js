@@ -12,13 +12,13 @@
     const kanjiList = [];
     const meaningList = [];
     const readingList = [];
-    const URL = "http://localhost:3000/addVocab";
+    const URL = "https://kanji-memory.herokuapp.com/addVocab";
     const EMAIL = "";
     const PASSWORD = "";
-    // Put kanji, meaning, reading into respective lists
+    // Put kanji, reading, and meaning into respective lists
     function getElementsWords() {
-        // get all words columns
-        const elementsWordsList = document.getElementsByClassName("concept_light clearfix");
+        const elementsKanjiReadingList = document.getElementsByClassName("concept_light-representation");
+        const elementsHolderMeaningList = document.getElementsByClassName("concept_light-meanings");
         //
         for (let i = 0; i < elementsKanjiReadingList.length; i++) {
             kanjiList.push(elementsKanjiReadingList[i].children["1"].innerText); // kanji string list
@@ -31,9 +31,6 @@
             }
             meaningList.push(tempMeaningList);
             //
-            // create reading string list
-            readingList.push(document.getElementsByClassName("furigana")[i].innerText);
-            //
         }
     }
     // Create button for each kanji tied to sendData
@@ -41,7 +38,7 @@
         for (let i = 0; i < kanjiList.length; i++) {
             // create button
             var btn = document.createElement('button');
-            btn.innerHTML = `<button id='myButton${i}' type='button' style='height:10px'> +`;
+            btn.innerHTML = `<button id='sendButton${i}' type='button' style='height:0px'> + </button>`;
             btn.addEventListener('click', function () {
                 sendData(kanjiList[i], meaningList[i], readingList[i]);
             });
@@ -70,6 +67,9 @@
             }
         });
     }
-    getElementsWords();
-    createButtons();
+    try {
+        getElementsWords();
+        createButtons();
+    }
+    catch (exception) { }
 })();

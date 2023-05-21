@@ -52,9 +52,9 @@ module.exports = {
         let con = await makeConnection();
 
         try {
-            currentTime = new Date().getTime();
+            let currentTime = new Date().getTime();
             const fourhours = 1000 * 60 * 60 * 4;
-            nextReviewTime = currentTime + fourhours;
+            let nextReviewTime = currentTime + fourhours;
 
             await con.query(`INSERT INTO vocab (parent_ID, kanji, meaning, reading, stage, nextReviewTime) VALUES ("${userID}", "${data.kanjiToBeReviewed}", "${data.meaningToBeReviewed}", "${data.readingToBeReviewed}", 0, ${nextReviewTime});`);
         }
@@ -69,7 +69,7 @@ module.exports = {
 
         try {
             let [result, fields] = await con.query(`SELECT * FROM vocab WHERE parent_ID LIKE ${userID}`);
-            return result
+            return result;
         }
         finally {
             con.end();
@@ -84,7 +84,7 @@ module.exports = {
             for (let i = 0; i < checkIfList.length; i++) {
                 if (checkIfList[i].check === true) {
                     // set the next time to review
-                    currentTime = new Date().getTime();
+                    let currentTime = new Date().getTime();
                     var nextTime = stageTimesMap.get(parseInt(reviewList[i].stage));
 
                     reviewList[i].nextReviewTime = currentTime + nextTime;
@@ -118,7 +118,7 @@ module.exports = {
         let con = await makeConnection();
 
         try {
-            let [result, fields] = await con.query(`SELECT * FROM userInfo WHERE email LIKE '${data.email}'`)
+            let [result, fields] = await con.query(`SELECT * FROM userInfo WHERE email LIKE '${data.email}'`);
             return result
         }
         finally {
@@ -128,18 +128,18 @@ module.exports = {
 
     // Miscellaneous mySQL usage
     variousSQL: async function () {
-        let con = await makeConnection();
+        let con = await makeConnection()
 
         //con.query("CREATE TABLE userInfo (userID int AUTO_INCREMENT, primary key(userID), username varchar(50), email varchar(30), password varchar(30))")
         //con.query("CREATE TABLE vocab (parent_ID int, INDEX index_parent_ID (parent_ID), FOREIGN KEY (parent_ID) REFERENCES userInfo(userID) ON UPDATE CASCADE ON DELETE CASCADE, vocabID int AUTO_INCREMENT, primary key(vocabID), kanji varchar(50), meaning varchar(1000), reading varchar(50), stage int, nextReviewTime bigint)")
-        //con.query("DROP TABLE vocab");
-        //con.query("DROP TABLE userInfo");
-        //con.query(`INSERT INTO test (kanji, meaning, reading, stage, latestReviewTime) VALUES ('${data.kanjiToBeReviewed}', '${data.meaningToBeReviewed}', '${data.readingToBeReviewed}', 0, ${timeOfReview});`);
+        //con.query("DROP TABLE vocab")
+        //con.query("DROP TABLE userInfo")
+        //con.query(`INSERT INTO test (kanji, meaning, reading, stage, latestReviewTime) VALUES ('${data.kanjiToBeReviewed}', '${data.meaningToBeReviewed}', '${data.readingToBeReviewed}', 0, ${timeOfReview});`)
         //con.query(`SELECT * FROM vocab WHERE parent_ID LIKE 2`, function (err, result) { if (err) console.log(err); console.log(result); })
         //let [result, fields] = await con.query("SELECT * FROM userInfo")
         let [result, fields] = await con.query("SELECT * FROM sessions")
-        //con.query("DELETE FROM userInfo");
+        //con.query("DELETE FROM userInfo")
         console.log(result)
-        con.end();
+        con.end()
     }
 }

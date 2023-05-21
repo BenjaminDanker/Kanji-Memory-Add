@@ -39,7 +39,7 @@ app.listen(process.env.PORT || 3000);
 
 // Handle request to add vocabulary to database
 app.post("/addVocab", async function (req, res) {
-    data = req.body;
+    let data = req.body;
 
   // get/verify email and password, to put into database
     let userInfo = await sql_organize.getUserInfo(data)
@@ -57,7 +57,7 @@ app.get("/", async function (req, res) {
     else {
         let vocabList = await sql_organize.getVocab(req.session.userID)
 
-        currentTime = new Date().getTime();
+        let currentTime = new Date().getTime();
         let reviewList = util_functions.getReviewList(vocabList, currentTime);
 
         res.render("index.ejs", {
@@ -75,7 +75,7 @@ app.get("/signup", function (req, res) {
 
 // Handle request to signup
 app.post("/addSignup", async function (req, res) {
-    data = req.body;
+    let data = req.body;
 
     // if already registered
     let tempInfo = await sql_organize.getUserInfo(data);
@@ -104,7 +104,7 @@ app.get("/login", function (req, res) {
 
 // Handle request to login
 app.post("/addLogin", async function (req, res) {
-    data = req.body;
+    let data = req.body;
 
   // get/verify email and password, then make user session
     let userInfo = await sql_organize.getUserInfo(data)
@@ -143,7 +143,7 @@ function isLoggedin(req, res, next) {
 app.get("/review", isLoggedin, async function (req, res) {
     let vocabList = await sql_organize.getVocab(req.session.userID)
 
-    currentTime = new Date().getTime();
+    let currentTime = new Date().getTime();
     let reviewList = util_functions.getReviewList(vocabList, currentTime);
 
     // put time of when review is started into session
