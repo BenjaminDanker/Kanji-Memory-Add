@@ -40,22 +40,33 @@
             //
         }
     }
-    // Create button for each kanji tied to sendData
-    function createButtons() {
+    // Create hyperlink for each kanji tied to sendData
+    function createHLink() {
         for (let i = 0; i < kanjiList.length; i++) {
-            // create button
-            var btn = document.createElement('button');
-            btn.innerHTML = `<button id='sendButton${i}' type='button' style='height:0px'> + </button>`;
-            btn.addEventListener('click', function () {
-                sendData(kanjiList[i], meaningList[i], readingList[i]);
-            });
+            // create hyperlink
+            var hLink = document.createElement('a');
+            // change hyperlink attributes
+            hLink.id = `sendHLink${i}`;
+            hLink.style.textDecoration = 'none';
+            hLink.innerText = "+";
             //
-            // put button onto website page
-            document.getElementsByClassName("concept_light-representation")[i].appendChild(btn);
+            hLink.addEventListener("click", clickedLink.bind(null, i), { once: true });
+            //
+            // put hyperlink onto website page
+            document.getElementsByClassName("concept_light-representation")[i].appendChild(hLink);
             //
         }
     }
-    // Send data tied to singular button
+    // event listener calling
+    function clickedLink(i) {
+        // change hyperlink to green when clicked
+        var hLinkElementChange = document.getElementById(`sendHLink${i}`);
+        hLinkElementChange.style.color = 'green';
+        //
+        // send clicked hyperlink's connected kanji data
+        sendData(kanjiList[i], meaningList[i], readingList[i]);
+    }
+    // Send data tied to singular hyper link
     function sendData(kanjiToBeReviewed, meaningToBeReviewed, readingToBeReviewed) {
         GM_xmlhttpRequest({
             method: "POST",
@@ -76,7 +87,7 @@
     }
     try {
         getElementsWords();
-        createButtons();
+        createHLink();
     }
     catch (exception) { }
 })();
