@@ -40,7 +40,6 @@ app.listen(process.env.PORT || 3000);
 // Handle request to check for vocabulary in database
 app.post("/checkForVocab", async function (req, res) {
     let data = req.body;
-    console.log("/checkForVocab req", req)
     console.log("/checkForVocab res", res)
     // get user information stored in database
     let userInfo = await sql_organize.getUserInfo(data);
