@@ -45,13 +45,10 @@ app.post("/checkForVocab", async function (req, res) {
     let userInfo = await sql_organize.getUserInfo(data);
 
     //  check if password matches
-    console.log("/checkForVocab userInfo: ", userInfo)
     if (userInfo[0].password === data.password) {
-        console.log("/checkForVocab passedPasswordCheck")
         // check if sent vocab is already in database
         let ifVocabList = await sql_organize.checkVocab(userInfo[0].userID, data.kanjiList.split(","));
 
-        console.log("/checkForVocab ifVocabList: ", ifVocabList)
         res.send(JSON.stringify(ifVocabList));
     }
 });
@@ -67,6 +64,8 @@ app.post("/addVocab", async function (req, res) {
     if (userInfo[0].password === data.password) {
         // put vocab into database
         sql_organize.insertVocab(data, userInfo[0].userID);
+
+        res.send("Added");
     }
 });
 
