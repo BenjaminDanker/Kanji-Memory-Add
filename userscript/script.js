@@ -12,7 +12,7 @@
     const kanjiList = [];
     const meaningList = [];
     const readingList = [];
-    const URL = "https://kanji-memory.herokuapp.com/addVocab";
+    const URL = "https://kanji-memory.herokuapp.com";
     const EMAIL = "";
     const PASSWORD = "";
     // Put kanji, reading, and meaning into respective lists
@@ -29,7 +29,7 @@
             for (let j = 0; j < elementsMeaningList.length; j++) {
                 //grammar string
                 var grammarString = elementsMeaningList[j].parentNode.parentNode.previousSibling.innerText;
-                meaningString += grammarString + '\n';
+                meaningString += grammarString + "\n";
                 //
                 // meaning string
                 meaningString += elementsMeaningList[j].innerText;
@@ -44,10 +44,11 @@
     function createHLink() {
         for (let i = 0; i < kanjiList.length; i++) {
             // create hyperlink
-            var hLink = document.createElement('a');
+            var hLink = document.createElement("a");
             // change hyperlink attributes
             hLink.id = `sendHLink${i}`;
-            hLink.style.textDecoration = 'none';
+            hLink.className = "sendHLinkClass";
+            hLink.style.textDecoration = "none";
             hLink.innerText = "+";
             //
             hLink.addEventListener("click", clickedLink.bind(null, i), { once: true });
@@ -57,20 +58,47 @@
             //
         }
     }
-    // event listener calling
+    // hyperlink event listener calling
     function clickedLink(i) {
         // change hyperlink to green when clicked
         var hLinkElementChange = document.getElementById(`sendHLink${i}`);
-        hLinkElementChange.style.color = 'green';
+        hLinkElementChange.style.color = "black";
         //
         // send clicked hyperlink's connected kanji data
         sendData(kanjiList[i], meaningList[i], readingList[i]);
+    }
+    // Send post to server to get back list of booleans if vocab is in user's database
+    function checkAlreadyReviewed() {
+        GM_xmlhttpRequest({
+            method: "POST",
+            url: URL + "/checkForVocab",
+            data: "email=" + encodeURIComponent(EMAIL) + "&" +
+                "password=" + encodeURIComponent(PASSWORD) + "&" +
+                "kanjiList=" + encodeURIComponent(kanjiList)
+            ,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            onload: function (response) {
+                // boolean list response
+                var res = JSON.parse(response.responseText);
+                // hyperlink element list
+                var hLinkElement = document.getElementsByClassName("sendHLinkClass");
+                // if boolean is true, then change respective hyperlink color
+                for (let i = 0; i < res.length; i++) {
+                    if (res[i] === true) {
+                        hLinkElement[i].style.color = "black";
+                    }
+                }
+                //
+            }
+        });
     }
     // Send data tied to singular hyper link
     function sendData(kanjiToBeReviewed, meaningToBeReviewed, readingToBeReviewed) {
         GM_xmlhttpRequest({
             method: "POST",
-            url: URL,
+            url: URL + "/addVocab",
             data: "email=" + encodeURIComponent(EMAIL) + "&" +
                 "password=" + encodeURIComponent(PASSWORD) + "&" +
                 "kanjiToBeReviewed=" + encodeURIComponent(kanjiToBeReviewed) + "&" +
@@ -88,6 +116,7 @@
     try {
         getElementsWords();
         createHLink();
+        checkAlreadyReviewed();
     }
     catch (exception) { }
 })();

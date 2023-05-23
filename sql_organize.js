@@ -101,6 +101,31 @@ module.exports = {
         }
     },
 
+    // Check if vocab is in database based on userID and kanji string List
+    checkVocab: async function (userID, kanjiList) {
+        let con = await makeConnection();
+
+        try {
+            let ifVocabList = [];
+
+            for (let i = 0; i < kanjiList.length; i++) {
+                let [result, fields] = await con.query(`SELECT * FROM vocab WHERE parent_ID LIKE '${userID}' AND kanji LIKE '${kanjiList[i]}'`);
+
+                if (result.length > 0) {
+                    ifVocabList.push(true);
+                }
+                else {
+                    ifVocabList.push(false);
+                }
+            }
+
+            return ifVocabList;
+        }
+        finally {
+            con.end();
+        }
+    },
+
     // Put email and password into database from signup
     insertUserInfo: async function (data) {
         let con = await makeConnection();
