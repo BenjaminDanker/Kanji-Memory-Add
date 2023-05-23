@@ -37,16 +37,34 @@ app.use(express.urlencoded({ extended: true }));
 app.listen(process.env.PORT || 3000);
 
 
+// Handle request to check for vocabulary in database
+app.post("/checkForVocab", async function (req, res) {
+    let data = req.body;
+
+    // get user information stored in database
+    let userInfo = await sql_organize.getUserInfo(data);
+
+    // check if sent vocab is already in database
+    let ifVocabList = await sql_organize.checkVocab(userInfo[0].userID, data.kanjiList.split(","));
+
+    //  check if password matches
+    if (userInfo[0].password === data.password) {
+        res.send(JSON.stringify(ifVocabList));
+    }
+});
+
 // Handle request to add vocabulary to database
 app.post("/addVocab", async function (req, res) {
     let data = req.body;
 
-  // get/verify email and password, to put into database
-    let userInfo = await sql_organize.getUserInfo(data)
+    // get user information stored in database
+    let userInfo = await sql_organize.getUserInfo(data);
+
+    //  check if password matches
     if (userInfo[0].password === data.password) {
+        // put vocab into database
         sql_organize.insertVocab(data, userInfo[0].userID);
     }
-  //
 });
 
 // Handle home page between logged in and logged out
