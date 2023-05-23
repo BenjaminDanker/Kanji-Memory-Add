@@ -4,6 +4,7 @@
 // @description  Takes kanji from jisho.org and adds to memory bank.
 // @author       SilverGem
 // @match        https://jisho.org/search/*
+// @downloadURL  https://raw.githubusercontent.com/BenjaminDanker/Kanji-Memory-Add/master/userscript/script.js
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
