@@ -12,7 +12,7 @@
     const kanjiList = [];
     const meaningList = [];
     const readingList = [];
-    const URL = "https://kanji-memory.herokuapp.com/addVocab";
+    const URL = "http://localhost:3000";
     const EMAIL = "";
     const PASSWORD = "";
     // Put kanji, reading, and meaning into respective lists
