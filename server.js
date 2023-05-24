@@ -44,12 +44,21 @@ app.post("/checkForVocab", async function (req, res) {
     // get user information stored in database
     let userInfo = await sql_organize.getUserInfo(data);
 
-    //  check if password matches
-    if (userInfo[0].password === data.password) {
-        // check if sent vocab is already in database
-        let ifVocabList = await sql_organize.checkVocab(userInfo[0].userID, data.kanjiList.split(","));
+    // if email is in database
+    if (userInfo[0]) {
+        //  check if password matches
+        if (userInfo[0].password === data.password) {
+            // check if sent vocab is already in database
+            let ifVocabList = await sql_organize.checkVocab(userInfo[0].userID, data.kanjiList.split(","));
 
-        res.send(JSON.stringify(ifVocabList));
+            res.send(JSON.stringify(ifVocabList));
+        }
+        else {
+            res.send("Incorrect Password")
+        }
+    }
+    else {
+        res.send("Incorrect Email");
     }
 });
 
@@ -60,10 +69,21 @@ app.post("/addVocab", async function (req, res) {
     // get user information stored in database
     let userInfo = await sql_organize.getUserInfo(data);
 
-    //  check if password matches
-    if (userInfo[0].password === data.password) {
-        // put vocab into database
-        sql_organize.insertVocab(data, userInfo[0].userID);
+    // if email is in database
+    if (userInfo[0]) {
+        //  check if password matches
+        if (userInfo[0].password === data.password) {
+            // put vocab into database
+            sql_organize.insertVocab(data, userInfo[0].userID);
+
+            res.send("Vocab Added");
+        }
+        else {
+            res.send("Incorrect Password")
+        }
+    }
+    else {
+        res.send("Incorrect Email");
     }
 });
 
