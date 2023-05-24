@@ -44,7 +44,7 @@ app.post("/checkForVocab", async function (req, res) {
     // get user information stored in database
     let userInfo = await sql_organize.getUserInfo(data);
 
-    if (typeof userInfo !== "undefined") {
+    if (typeof userInfo[0] !== "undefined") {
         //  check if password matches
         if (userInfo[0].password === data.password) {
             // check if sent vocab is already in database
