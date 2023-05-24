@@ -45,7 +45,7 @@ app.post("/checkForVocab", async function (req, res) {
     let userInfo = await sql_organize.getUserInfo(data);
 
     //  check if password matches
-    if (userInfo && userInfo[0].password === data.password) {
+    if ( !(typeof(userInfo) === "undefined") && userInfo[0].password === data.password) {
         // check if sent vocab is already in database
         let ifVocabList = await sql_organize.checkVocab(userInfo[0].userID, data.kanjiList.split(","));
 
