@@ -44,12 +44,14 @@ app.post("/checkForVocab", async function (req, res) {
     // get user information stored in database
     let userInfo = await sql_organize.getUserInfo(data);
 
-    //  check if password matches
-    if ( !(typeof(userInfo) === "undefined") && userInfo[0].password === data.password) {
-        // check if sent vocab is already in database
-        let ifVocabList = await sql_organize.checkVocab(userInfo[0].userID, data.kanjiList.split(","));
+    if (typeof userInfo !== "undefined") {
+        //  check if password matches
+        if (userInfo[0].password === data.password) {
+            // check if sent vocab is already in database
+            let ifVocabList = await sql_organize.checkVocab(userInfo[0].userID, data.kanjiList.split(","));
 
-        res.send(JSON.stringify(ifVocabList));
+            res.send(JSON.stringify(ifVocabList));
+        }
     }
 });
 
