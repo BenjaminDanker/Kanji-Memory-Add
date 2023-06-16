@@ -23,16 +23,16 @@ stageTimesMap.set(6, fourmonths);
 //
 
 const options = {
-    host: process.env.MYSQLHOST || "localhost",
-    user: process.env.MYSQLUSER || "root",
-    password: process.env.MYSQLPASSWORD || "password",
-    database: process.env.MYSQLDATABASE || "kanjiList",
-    port: process.env.MYSQLPORT || ""
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "kanjiList",
+    port: ""
 }
 
 // create mySQL connection 
 function makeConnection() {
-    const con = mysql.createConnection(process.env.JAWSDB_URL);
+    const con = mysql.createConnection(process.env.JAWSDB_URL || options);
     console.log("Connection Established")
 
     return con;
@@ -41,7 +41,7 @@ function makeConnection() {
 module.exports = {
     // get msqyl connection for session storage
     getSessionConnection: function () {
-        const con = mysql2.createConnection(process.env.JAWSDB_URL);
+        const con = mysql2.createConnection(process.env.JAWSDB_URL || options);
         const sessionStore = new MySQLStore({}, con);
 
         return sessionStore;
