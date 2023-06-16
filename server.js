@@ -202,7 +202,7 @@ app.post("/reviewEnd", async function (req, res) {
     let vocabList = await sql_organize.getVocab(req.session.userID);
     let reviewList = util_functions.getReviewList(vocabList, req.session.currentTime);
 
-    sql_organize.updateVocab(checkIfList, reviewList);
+    await sql_organize.updateVocab(checkIfList, reviewList);
 
     // reset session current time for debugging purposes
     req.session.currentTime = 0;
