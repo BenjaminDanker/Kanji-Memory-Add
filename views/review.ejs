@@ -44,6 +44,12 @@
         // formatting often puts spaces between %% which creates syntax error
         var reviewList = <%-JSON.stringify(reviewList)%>;
 
+        // shuffle reviewList
+        for (let i = reviewList.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [reviewList[i], reviewList[j]] = [reviewList[j], reviewList[i]];
+        }
+
         var reviewRemainingCount = reviewList.length;
 
         // list of objects carrying if vocab was correct or incorrect
@@ -62,6 +68,9 @@
         function changeKanji() {
             // review end
             if (i + 1 === reviewList.length) {
+                // sort checkIfList by vocabID
+                checkIfList.sort(function (a, b) { return parseFloat(a.vocabID) - parseFloat(b.vocabID) })
+
                 document.getElementById("reviewInput").value = JSON.stringify(checkIfList);
                 document.getElementById("reviewForm").submit();
             }
