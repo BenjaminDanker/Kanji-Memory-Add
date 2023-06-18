@@ -9,6 +9,9 @@ const RateLimit = require("express-rate-limit");
 
 const address = "kanji-memory.herokuapp";
 
+let ifSecure;
+if (process.env.PORT) { ifSecure = true; }
+else { ifSecure = false; }
 
 const app = express();
 app.use(helmet({
@@ -25,7 +28,7 @@ app.use(RateLimit({
 app.use(session({
     secret: "unknownsecret",
     store: sql_organize.getSessionConnection(),
-    cookie: { secure: true, maxAge: 500000000000 },
+    cookie: { secure: ifSecure, maxAge: 500000000000 },
     proxy: true,
     resave: false,
     saveUninitialized: false
